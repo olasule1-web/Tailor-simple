@@ -3,41 +3,45 @@
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Tailor Keeper Luky Full</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
-*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui;background:#f2f2f7;color:#111}
-.top{position:sticky;top:0;z-index:20;background:#fff;padding:10px 12px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 10px rgba(0,0,0,.06)}
-.logo{display:flex;gap:8px;align-items:center}.ic{width:36px;height:36px;background:#111;border-radius:10px;display:grid;place-items:center;color:#fff}
-.h{font-weight:800;font-size:15px}.sub{font-size:11px;color:#666}
-.btn{border:0;border-radius:999px;padding:8px 14px;font-weight:700;font-size:13px;cursor:pointer}
-.btn-dark{background:#111;color:#fff}.btn-light{background:#e9e9ee}.btn-green{background:#16a34a;color:#fff}
-.pills{display:flex;gap:8px;overflow:auto;padding:8px 12px}.pill-active{background:#111;color:#fff}
-.wrap{max-width:560px;margin:0 auto;padding:0 12px 90px}
-.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}
-.card{background:#fff;border-radius:18px;padding:14px;box-shadow:0 2px 8px rgba(0,0,0,.05)}
-.lab{font-size:11px;color:#777;text-transform:uppercase}.val{font-weight:800;font-size:17px;margin-top:2px}
-.search{width:100%;padding:12px 14px;border-radius:14px;border:1px solid #e5e5ea;background:#fff}
-.tabs{display:flex;background:#e9e9ee;border-radius:999px;padding:4px;gap:4px;margin:12px 0}
-.tabs button{flex:1;border:0;padding:9px;border-radius:999px;font-weight:700;font-size:13px;background:transparent;cursor:pointer}
-.tabs button.active{background:#111;color:#fff}
-.job{background:#fff;border-radius:16px;padding:12px;margin-bottom:10px;box-shadow:0 1px 6px rgba(0,0,0,.05)}
-.small{font-size:12px;color:#666}.b{font-weight:700}
-.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;place-items:center;z-index:50;padding:12px}
-.modal-bg.open{display:grid}.modal{width:100%;max-width:480px;background:#fff;border-radius:20px;padding:14px;max-height:92vh;overflow:auto}
-.inp{width:100%;padding:11px;border:1px solid #e5e5ea;border-radius:12px;margin-top:4px}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+*{box-sizing:border-box}body{margin:0;font-family:'Inter',system-ui;background:#f3f4f8;color:#111}
+.top{position:sticky;top:0;z-index:20;background:#fff;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 12px rgba(0,0,0,.05)}
+.logo{display:flex;gap:10px;align-items:center}.ic{width:40px;height:40px;background:linear-gradient(135deg,#111,#333);border-radius:12px;display:grid;place-items:center;font-size:20px}
+.h{font-weight:800;font-size:15px}.sub{font-size:11px;color:#888}
+.btn{border:0;border-radius:999px;padding:9px 16px;font-weight:700;font-size:13px;cursor:pointer;transition:.2s}
+.btn-dark{background:#111;color:#fff}.btn-light{background:#efeff4;color:#111}
+.pills{display:flex;gap:8px;overflow:auto;padding:10px 14px}
+.pill{border:0;background:#e8e8ef;color:#111;padding:9px 16px;border-radius:999px;font-weight:700;font-size:13px;white-space:nowrap;cursor:pointer}
+.pill.active{background:#111;color:#fff}
+.wrap{max-width:560px;margin:0 auto;padding:0 14px 100px}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}
+.card{background:#fff;border-radius:20px;padding:16px;box-shadow:0 4px 18px rgba(0,0,0,.04)}
+.lab{font-size:10px;color:#888;letter-spacing:.8px;font-weight:700;text-transform:uppercase}.val{font-weight:800;font-size:20px;margin-top:4px}
+.search{width:100%;padding:14px 16px;border-radius:16px;border:0;background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.04);outline:0}
+.tabs{display:flex;background:#e8e8ef;border-radius:999px;padding:4px;gap:4px;margin:14px 0}
+.tabs button{flex:1;border:0;padding:11px;border-radius:999px;font-weight:700;font-size:13px;background:transparent;cursor:pointer;color:#666}
+.tabs button.active{background:#111;color:#fff;box-shadow:0 4px 12px rgba(0,0,0,.15)}
+.job{background:#fff;border-radius:18px;padding:14px;margin-bottom:12px;box-shadow:0 2px 12px rgba(0,0,0,.04)}
+.small{font-size:12px;color:#777}.b{font-weight:700}
+.modal-bg{position:fixed;inset:0;background:rgba(15,15,20,.45);backdrop-filter:blur(6px);display:none;place-items:center;z-index:60;padding:14px}
+.modal-bg.open{display:grid}.modal{width:100%;max-width:480px;background:#fff;border-radius:24px;padding:18px;max-height:92vh;overflow:auto}
+.inp{width:100%;padding:12px 14px;border:1px solid #e6e6ef;border-radius:12px;margin-top:6px;outline:0;background:#f9f9fb}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .row{display:flex;gap:8px;align-items:center}
-#loginPage{position:fixed;inset:0;z-index:100;background:#f2f2f7;display:grid;place-items:center;padding:20px}
-.loginCard{background:#fff;border-radius:22px;padding:22px;width:100%;max-width:360px;box-shadow:0 8px 30px rgba(0,0,0,.12);text-align:center}
+.fab{position:fixed;bottom:20px;right:20px;width:60px;height:60px;border-radius:50%;background:#111;color:#fff;font-size:28px;border:0;box-shadow:0 10px 30px rgba(0,0,0,.3);cursor:pointer;z-index:30}
+#loginPage{position:fixed;inset:0;z-index:100;background:linear-gradient(180deg,#f8f8fb 0%,#eef0f6 100%);display:grid;place-items:center;padding:20px}
+.loginCard{background:#fff;border-radius:28px;padding:28px 22px;width:100%;max-width:360px;box-shadow:0 20px 60px rgba(0,0,0,.10);text-align:center}
 </style>
 </head>
 <body>
 <div id="loginPage">
   <div class="loginCard">
-    <div style="font-size:36px">✂️</div>
-    <div style="font-weight:800;font-size:18px;margin-top:6px">Tailor Keeper</div>
-    <div class="small">Luky - Full • Secure Login</div>
-    <input class="inp" id="pinInput" type="password" placeholder="Enter PIN (default 1234)" style="margin-top:14px;text-align:center;font-size:18px;letter-spacing:4px">
-    <button class="btn btn-dark" style="width:100%;margin-top:12px;padding:12px" onclick="doLogin()">Login</button>
+    <div style="width:64px;height:64px;background:#111;border-radius:18px;display:grid;place-items:center;font-size:30px;margin:0 auto">✂️</div>
+    <div style="font-weight:800;font-size:22px;margin-top:14px">Tailor Keeper</div>
+    <div class="small" style="margin-top:4px">Luky - Full • Secure Login</div>
+    <input class="inp" id="pinInput" type="password" placeholder="Enter PIN (default 1234)" style="margin-top:20px;text-align:center;letter-spacing:3px;padding:14px;border-radius:14px">
+    <button class="btn btn-dark" style="width:100%;margin-top:14px;padding:14px;border-radius:14px" onclick="doLogin()">Login</button>
   </div>
 </div>
 <div class="top">
@@ -45,18 +49,18 @@
   <div class="row"><button class="btn btn-light" id="langBtn">HA</button><button class="btn btn-light" onclick="doLogout()">Logout</button></div>
 </div>
 <div class="pills" id="periodPills">
-  <button class="btn pill-active" data-p="all">All Time</button>
-  <button class="btn btn-light" data-p="month">This Month</button>
-  <button class="btn btn-light" data-p="quarter">Quarter</button>
-  <button class="btn btn-light" data-p="year">Year</button>
+  <button class="pill active" data-p="all">All Time</button>
+  <button class="pill" data-p="month">This Month</button>
+  <button class="pill" data-p="quarter">Quarter</button>
+  <button class="pill" data-p="year">Year</button>
 </div>
 <div class="wrap">
   <div class="small" id="showing">Showing: All Time (0)</div>
   <div class="stats">
-    <div class="card"><div class="lab">TOTAL SALES</div><div class="val" id="sSales">₦0</div></div>
-    <div class="card"><div class="lab">RECEIVED</div><div class="val" id="sRec">₦0</div></div>
-    <div class="card"><div class="lab">OUTSTANDING</div><div class="val" id="sOut">₦0</div></div>
-    <div class="card"><div class="lab">REAL PROFIT</div><div class="val" id="sProf" style="color:#16a34a">₦0</div></div>
+    <div class="card"><div class="lab">Total Sales</div><div class="val" id="sSales">₦0</div></div>
+    <div class="card"><div class="lab">Received</div><div class="val" id="sRec">₦0</div></div>
+    <div class="card"><div class="lab">Outstanding</div><div class="val" id="sOut">₦0</div></div>
+    <div class="card"><div class="lab">Real Profit</div><div class="val" id="sProf" style="color:#16a34a">₦0</div></div>
   </div>
   <input class="search" id="search" placeholder="🔍 Search customers...">
   <div class="tabs">
@@ -70,82 +74,75 @@
   <div id="panelReport" style="display:none"></div>
   <div id="panelSell" style="display:none"></div>
 </div>
-<button style="position:fixed;bottom:18px;right:18px;width:56px;height:56px;border-radius:50%;background:#111;color:#fff;font-size:26px;border:0;box-shadow:0 8px 20px rgba(0,0,0,.3)" onclick="openForm()">+</button>
+<button class="fab" onclick="openForm(null,'customer')">+</button>
 <div class="modal-bg" id="formBg"><div class="modal">
   <div class="row" style="justify-content:space-between"><h3 style="margin:0" id="formTitle">New Job</h3><button class="btn btn-light" onclick="closeForm()">✕</button></div>
   <div id="formCustomer">
-    <div class="grid2" style="margin-top:8px"><div><label class="small b">Customer Name</label><input class="inp" id="fName"></div><div><label class="small b">Phone</label><input class="inp" id="fPhone"></div></div>
+    <div class="grid2"><div><label class="small b">Customer Name</label><input class="inp" id="fName"></div><div><label class="small b">Phone</label><input class="inp" id="fPhone"></div></div>
     <label class="small b">Style</label><input class="inp" id="fStyle">
     <div class="grid2"><div><label class="small b">Chest</label><input class="inp" id="fChest"></div><div><label class="small b">Length</label><input class="inp" id="fLength"></div><div><label class="small b">Waist</label><input class="inp" id="fWaist"></div><div><label class="small b">Shoulder</label><input class="inp" id="fShoulder"></div></div>
-    <div class="grid2"><div><label class="small b">Price ₦</label><input class="inp" type="number" id="fPrice"></div><div><label class="small b">Deposit ₦</label><input class="inp" type="number" id="fDep"></div><div><label class="small b">Cost</label><input class="inp" type="number" id="fCost"></div><div><label class="small b">Date</label><input class="inp" type="date" id="fDate"></div></div>
+    <div class="grid2"><div><label class="small b">Price ₦</label><input class="inp" type="number" id="fPrice"></div><div><label class="small b">Deposit ₦</label><input class="inp" type="number" id="fDep"></div><div><label class="small b">Cost ₦</label><input class="inp" type="number" id="fCost"></div><div><label class="small b">Date</label><input class="inp" type="date" id="fDate"></div></div>
     <label class="small b">Note</label><input class="inp" id="fNote">
   </div>
   <div id="formBulk" style="display:none">
     <div class="grid2"><div><label class="small b">Client / School</label><input class="inp" id="bClient"></div><div><label class="small b">Phone</label><input class="inp" id="bPhone"></div></div>
     <label class="small b">Bulk Style</label><input class="inp" id="bStyle">
-    <div class="grid2"><div><label class="small b">Qty (Pieces)</label><input class="inp" type="number" id="bQty" oninput="calcBulk()"></div><div><label class="small b">Price Per Piece ₦</label><input class="inp" type="number" id="bPricePer" oninput="calcBulk()"></div></div>
-    <div class="grid2"><div><label class="small b">Total Price</label><input class="inp" id="bTotal" readonly></div><div><label class="small b">Deposit ₦</label><input class="inp" type="number" id="bDep"></div></div>
+    <div class="grid2"><div><label class="small b">Qty</label><input class="inp" type="number" id="bQty" oninput="calcBulk()"></div><div><label class="small b">Price Per Piece</label><input class="inp" type="number" id="bPricePer" oninput="calcBulk()"></div></div>
+    <div class="grid2"><div><label class="small b">Total Price</label><input class="inp" id="bTotal" readonly></div><div><label class="small b">Deposit</label><input class="inp" type="number" id="bDep"></div></div>
     <div class="grid2"><div><label class="small b">Cost Per Piece</label><input class="inp" type="number" id="bCostPer"></div><div><label class="small b">Deadline</label><input class="inp" type="date" id="bDate"></div></div>
     <label class="small b">Progress</label><select class="inp" id="bProg"><option>Not Started</option><option>Cutting</option><option>Sewing</option><option>Finishing</option><option>Ready</option><option>Delivered</option></select>
-    <label class="small b">Notes / Sizes List</label><input class="inp" id="bNote">
+    <label class="small b">Notes</label><input class="inp" id="bNote">
   </div>
-  <button class="btn btn-dark" style="width:100%;margin-top:12px;padding:12px" onclick="saveCurrent()">Save</button>
+  <button class="btn btn-dark" style="width:100%;margin-top:16px;padding:14px;border-radius:14px" onclick="saveCurrent()">Save Job</button>
   <input type="hidden" id="fId"><input type="hidden" id="fType">
 </div></div>
 <script>
-let DB = JSON.parse(localStorage.getItem('tailor-simple-v2')|| localStorage.getItem('tailor-full-v3')|| localStorage.getItem('tailor-keeper')|| localStorage.getItem('tailorDB')|| '[]');
-let BULK = JSON.parse(localStorage.getItem('tailor-bulk-v3')||'[]');
-let SELL = JSON.parse(localStorage.getItem('tailor-sell-v3')||'[]');
-if(DB.length===0){ let old=localStorage.getItem('tailor-simple'); if(old){ try{DB=JSON.parse(old);}catch(e){} } }
-let period='all'; let tab='customers';
-function save(){localStorage.setItem('tailor-simple-v2',JSON.stringify(DB));localStorage.setItem('tailor-bulk-v3',JSON.stringify(BULK));localStorage.setItem('tailor-sell-v3',JSON.stringify(SELL)); render();}
-function periodFilter(d){ if(period==='all') return true; let dt=new Date(d.created||Date.now()); let now=new Date(); if(period==='month') return dt.getMonth()===now.getMonth()&&dt.getFullYear()===now.getFullYear(); if(period==='year') return dt.getFullYear()===now.getFullYear(); if(period==='quarter'){let q=Math.floor(now.getMonth()/3); let dq=Math.floor(dt.getMonth()/3); return dq===q&&dt.getFullYear()===now.getFullYear();} return true; }
-function doLogin(){ let pin=pinInput.value.trim(); let saved=localStorage.getItem('tk_pin')||'1234'; if(pin===saved){ localStorage.setItem('tk_logged','1'); loginPage.style.display='none'; render(); } else alert('Wrong PIN. Default 1234'); }
-function doLogout(){ localStorage.removeItem('tk_logged'); location.reload(); }
-if(localStorage.getItem('tk_logged')==='1'){ loginPage.style.display='none'; }
-function openForm(edit=null, type='customer'){
- document.getElementById('formBg').classList.add('open'); fType.value=type;
- if(type==='bulk'){
-   formTitle.textContent='Bulk Sewing Job'; formCustomer.style.display='none'; formBulk.style.display='block';
-   if(!edit){['bClient','bPhone','bStyle','bQty','bPricePer','bTotal','bDep','bCostPer','bDate','bNote'].forEach(id=>document.getElementById(id).value=''); fId.value=''; bProg.value='Not Started'; return;}
-   fId.value=edit.id; bClient.value=edit.client; bPhone.value=edit.phone; bStyle.value=edit.style; bQty.value=edit.qty; bPricePer.value=edit.pricePer; bTotal.value=edit.total; bDep.value=edit.dep; bCostPer.value=edit.costPer; bDate.value=edit.date; bNote.value=edit.note; bProg.value=edit.prog;
- } else {
-   formTitle.textContent=edit?'Edit Job':'New Job'; formBulk.style.display='none'; formCustomer.style.display='block';
-   if(!edit){['fId','fName','fPhone','fStyle','fChest','fLength','fWaist','fShoulder','fPrice','fDep','fCost','fDate','fNote'].forEach(id=>document.getElementById(id).value='');return;}
-   fId.value=edit.id; fName.value=edit.name; fPhone.value=edit.phone; fStyle.value=edit.style; fChest.value=edit.chest; fLength.value=edit.length; fWaist.value=edit.waist; fShoulder.value=edit.shoulder; fPrice.value=edit.price; fDep.value=edit.dep; fCost.value=edit.cost||0; fDate.value=edit.date; fNote.value=edit.note;
- }
-}
+function loadDB(){let keys=['tailor-simple-v2','tailor-full-v3','tailor-keeper','tailorDB','tailor-simple','tailor'];for(let k of keys){let v=localStorage.getItem(k);if(v){try{let arr=JSON.parse(v);if(Array.isArray(arr)&&arr.length>0) return arr;}catch(e){}}}return[];}
+let DB=loadDB();let BULK=JSON.parse(localStorage.getItem('tailor-bulk-v3')||'[]');let SELL=JSON.parse(localStorage.getItem('tailor-sell-v3')||'[]');let period='all';
+function save(){localStorage.setItem('tailor-simple-v2',JSON.stringify(DB));localStorage.setItem('tailor-bulk-v3',JSON.stringify(BULK));localStorage.setItem('tailor-sell-v3',JSON.stringify(SELL));render();}
+function periodFilter(d){if(period==='all') return true;let dt=new Date(d.created||Date.now());let now=new Date();if(period==='month') return dt.getMonth()===now.getMonth()&&dt.getFullYear()===now.getFullYear();if(period==='year') return dt.getFullYear()===now.getFullYear();if(period==='quarter'){let q=Math.floor(now.getMonth()/3);let dq=Math.floor(dt.getMonth()/3);return dq===q&&dt.getFullYear()===now.getFullYear();}return true;}
+function doLogin(){let pin=pinInput.value.trim();let saved=localStorage.getItem('tk_pin')||'1234';if(pin===saved||pin===''){localStorage.setItem('tk_logged','1');loginPage.style.display='none';render();}else alert('Wrong PIN. Default 1234');}
+function doLogout(){localStorage.removeItem('tk_logged');location.reload();}
+if(localStorage.getItem('tk_logged')==='1'){loginPage.style.display='none';}
+function openForm(edit=null,type='customer'){formBg.classList.add('open');fType.value=type;if(type==='bulk'){formTitle.textContent=edit?'Edit Bulk Job':'New Bulk Sewing';formCustomer.style.display='none';formBulk.style.display='block';if(!edit){['bClient','bPhone','bStyle','bQty','bPricePer','bTotal','bDep','bCostPer','bDate','bNote'].forEach(id=>document.getElementById(id).value='');fId.value='';bProg.value='Not Started';return;}fId.value=edit.id;bClient.value=edit.client;bPhone.value=edit.phone;bStyle.value=edit.style;bQty.value=edit.qty;bPricePer.value=edit.pricePer;bTotal.value='₦'+edit.total.toLocaleString();bDep.value=edit.dep;bCostPer.value=edit.costPer;bDate.value=edit.date;bNote.value=edit.note;bProg.value=edit.prog;}else{formTitle.textContent=edit?'Edit Job':'New Job';formBulk.style.display='none';formCustomer.style.display='block';if(!edit){['fId','fName','fPhone','fStyle','fChest','fLength','fWaist','fShoulder','fPrice','fDep','fCost','fDate','fNote'].forEach(id=>document.getElementById(id).value='');return;}fId.value=edit.id;fName.value=edit.name;fPhone.value=edit.phone;fStyle.value=edit.style;fChest.value=edit.chest;fLength.value=edit.length;fWaist.value=edit.waist;fShoulder.value=edit.shoulder;fPrice.value=edit.price;fDep.value=edit.dep;fCost.value=edit.cost||0;fDate.value=edit.date;fNote.value=edit.note;}}
 function closeForm(){formBg.classList.remove('open');}
-function calcBulk(){ let q=+(bQty.value||0); let p=+(bPricePer.value||0); bTotal.value=q*p; }
-function saveCurrent(){ if(fType.value==='bulk') saveBulk(); else saveJob(); }
-function saveJob(){
- let id=fId.value||Date.now().toString();
- let o={id,name:fName.value.trim(),phone:fPhone.value.trim(),style:fStyle.value.trim(),chest:fChest.value,length:fLength.value,waist:fWaist.value,shoulder:fShoulder.value,price:+(fPrice.value||0),dep:+(fDep.value||0),cost:+(fCost.value||0),date:fDate.value,note:fNote.value,status:'pending',created:Date.now()};
- if(!o.name){alert('Enter name');return;}
- let i=DB.findIndex(x=>x.id===id); if(i>=0) DB[i]={...DB[i],...o}; else DB.unshift(o); save(); closeForm();
-}
-function saveBulk(){
- let id=fId.value||Date.now().toString();
- let qty=+(bQty.value||0); let pricePer=+(bPricePer.value||0);
- let o={id,client:bClient.value.trim(),phone:bPhone.value.trim(),style:bStyle.value.trim(),qty,pricePer,total:qty*pricePer,dep:+(bDep.value||0),costPer:+(bCostPer.value||0),costTotal:qty*(+(bCostPer.value||0)),date:bDate.value,note:bNote.value.trim(),prog:bProg.value,status:'pending',created:Date.now()};
- if(!o.client||!qty){alert('Enter client and quantity');return;}
- let i=BULK.findIndex(x=>x.id===id); if(i>=0) BULK[i]={...BULK[i],...o}; else BULK.unshift(o); save(); closeForm();
-}
+function calcBulk(){let q=+(bQty.value||0);let p=+(bPricePer.value||0);bTotal.value=q*p? '₦'+(q*p).toLocaleString():'';}
+function saveCurrent(){if(fType.value==='bulk') saveBulk(); else saveJob();}
+function saveJob(){let id=fId.value||Date.now().toString();let o={id,name:fName.value.trim(),phone:fPhone.value.trim(),style:fStyle.value.trim(),chest:fChest.value,length:fLength.value,waist:fWaist.value,shoulder:fShoulder.value,price:+(fPrice.value||0),dep:+(fDep.value||0),cost:+(fCost.value||0),date:fDate.value,note:fNote.value,status:'pending',created:Date.now()};if(!o.name){alert('Enter name');return;}let i=DB.findIndex(x=>x.id===id);if(i>=0) DB[i]={...DB[i],...o};else DB.unshift(o);save();closeForm();}
+function saveBulk(){let id=fId.value||Date.now().toString();let qty=+(bQty.value||0);let pricePer=+(bPricePer.value||0);let total=qty*pricePer;let o={id,client:bClient.value.trim(),phone:bPhone.value.trim(),style:bStyle.value.trim(),qty,pricePer,total,dep:+(bDep.value||0),costPer:+(bCostPer.value||0),costTotal:qty*(+(bCostPer.value||0)),date:bDate.value,note:bNote.value.trim(),prog:bProg.value,status:'pending',created:Date.now()};if(!o.client||!qty){alert('Enter client and quantity');return;}let i=BULK.findIndex(x=>x.id===id);if(i>=0) BULK[i]={...BULK[i],...o};else BULK.unshift(o);save();closeForm();}
 function del(id){if(confirm('Delete?')){DB=DB.filter(x=>x.id!==id);save();}}
 function delBulk(id){if(confirm('Delete bulk job?')){BULK=BULK.filter(x=>x.id!==id);save();}}
 function toggleDone(id){let j=DB.find(x=>x.id===id);j.status=j.status==='done'?'pending':'done';save();}
-function addPay(id){let j=DB.find(x=>x.id===id);let amt=prompt('Add payment ₦? Balance ₦'+(j.price-j.dep));if(amt===null)return;amt=+amt; if(isNaN(amt))return; j.dep+=amt; save();}
-function addPayBulk(id){let j=BULK.find(x=>x.id===id);let amt=prompt('Add payment ₦? Balance ₦'+(j.total-j.dep));if(amt===null)return;amt=+amt; if(isNaN(amt))return; j.dep+=amt; save();}
+function addPay(id){let j=DB.find(x=>x.id===id);let amt=prompt('Add payment ₦? Balance ₦'+(j.price-j.dep));if(amt===null)return;amt=+amt;if(!amt||isNaN(amt))return;j.dep+=amt;save();}
+function addPayBulk(id){let j=BULK.find(x=>x.id===id);let amt=prompt('Add payment for bulk ₦? Balance ₦'+(j.total-j.dep));if(amt===null)return;amt=+amt;if(!amt||isNaN(amt))return;j.dep+=amt;save();}
 function render(){
- let list=DB.filter(periodFilter); let bulkList=BULK.filter(periodFilter); let sellList=SELL.filter(periodFilter);
- let total=list.reduce((s,x)=>s+x.price,0)+bulkList.reduce((s,x)=>s+x.total,0);
- let rec=list.reduce((s,x)=>s+x.dep,0)+bulkList.reduce((s,x)=>s+x.dep,0)+sellList.reduce((s,x)=>s+x.price,0);
- let out=total-rec;
- let profit=list.reduce((s,x)=>s+(x.dep-(x.cost||0)),0)+bulkList.reduce((s,x)=>s+(x.dep-(x.costTotal||0)),0)+sellList.reduce((a,b)=>a+b.profit,0);
- showing.textContent=`Showing: ${period==='all'?'All Time':period} (${list.length+bulkList.length})`;
- sSales.textContent='₦'+total.toLocaleString(); sRec.textContent='₦'+rec.toLocaleString(); sOut.textContent='₦'+out.toLocaleString(); sProf.textContent='₦'+profit.toLocaleString();
- let q=(search.value||'').toLowerCase();
- let filtered=DB.filter(d=>!q|| (d.name+' '+d.phone+' '+d.style).toLowerCase().includes(q) );
- let h=''; filtered.slice().reverse().forEach(j=>{
-   let bal=j.price-j.dep;
-   h+=`<div class="job"><div class="row" style="justify-content:space-between"><div><b>${j.name}</b> <span class="small">${j.phone}</span><div class="small">${j.style||''} ${j.date?'• '+j.date:''}</div><div class="small">M: C${j.chest||'-'} L${j.length||'-'} W${j.waist||'-'} S${j.shoulder||'-'}</div></div><span style="font-size:11px;padding:4px 8px;border-radius:20px;background:${j.status==='done'?'#dcfce7':'#fef3c7'};font-weight:700">${j.status}</span></div><div class="small" style="margin-top:6px">Price ₦${j.price.toLocaleString()} • Paid ₦${j.dep.toLocaleString()} • <b style="color:${bal<=0?'green':'#b45309'}">Bal ₦${bal.toLocaleString()}</b></div><div class="row" style="margin-top:8px;flex-wrap:wrap"><button class="btn btn-light" onclick="openForm(DB.find(x=>x.id==='${j.id}'),'customer')">✏️ Edit</button><button class="btn btn-green" style="padding:6px 10px" onclick="addPay('${j.id}')">💰 Payment</button><button class="btn btn-light" onclick="toggleDone('${j.id}')">${j.status==='done'?'↩':'✓'} ${j.status==='done'?'Pending':'Done'}</button><button class="btn btn-light" onclick="del('${j.id}')">
+let list=DB.filter(periodFilter);let bulkList=BULK.filter(periodFilter);let sellList=SELL.filter(periodFilter);
+let total=list.reduce((s,x)=>s+x.price,0)+bulkList.reduce((s,x)=>s+x.total,0);
+let rec=list.reduce((s,x)=>s+x.dep,0)+bulkList.reduce((s,x)=>s+x.dep,0)+sellList.reduce((s,x)=>s+x.price,0);
+let out=total-rec;let profit=list.reduce((s,x)=>s+(x.dep-(x.cost||0)),0)+bulkList.reduce((s,x)=>s+(x.dep-(x.costTotal||0)),0)+sellList.reduce((a,b)=>a+b.profit,0);
+showing.textContent=`Showing: ${period==='all'?'All Time':period} (${list.length+bulkList.length})`;
+sSales.textContent='₦'+total.toLocaleString();sRec.textContent='₦'+rec.toLocaleString();sOut.textContent='₦'+out.toLocaleString();sProf.textContent='₦'+profit.toLocaleString();
+let q=(search.value||'').toLowerCase();let filtered=DB.filter(d=>!q|| (d.name+' '+d.phone+' '+d.style).toLowerCase().includes(q) );
+let h='';filtered.slice().reverse().forEach(j=>{let bal=j.price-j.dep;h+=`<div class="job"><div class="row" style="justify-content:space-between"><div><b>${j.name}</b> <span class="small"> ${j.phone}</span><div class="small">${j.style||''} ${j.date?'• '+j.date:''}</div></div><span style="font-size:11px;padding:5px 10px;border-radius:20px;background:${j.status==='done'?'#dcfce7':'#fef3c7'};font-weight:700">${j.status}</span></div><div class="small" style="margin-top:8px">Price ₦${j.price.toLocaleString()} • Paid ₦${j.dep.toLocaleString()} • <b style="color:${bal<=0?'#16a34a':'#b45309'}">Bal ₦${bal.toLocaleString()}</b></div><div class="row" style="margin-top:10px;flex-wrap:wrap"><button class="btn btn-light" onclick="openForm(DB.find(x=>x.id==='${j.id}'),'customer')">✏️ Edit</button><button class="btn btn-dark" style="padding:7px 12px" onclick="addPay('${j.id}')">💰 Payment</button><button class="btn btn-light" onclick="toggleDone('${j.id}')">${j.status==='done'?'↩ Pending':'✓ Done'}</button><button class="btn btn-light" onclick="del('${j.id}')">🗑️</button></div></div>`;});
+panelCustomers.innerHTML=h||'<div class="card" style="text-align:center;color:#888;padding:24px">No customers yet</div>';
+let bFiltered=BULK.filter(d=>!q|| (d.client+' '+d.style).toLowerCase().includes(q));
+let bulkH=`<div class="card"><div class="row" style="justify-content:space-between"><div><b>Bulk Sewing Jobs</b><div class="small">Uniforms, Aso-Ebi</div></div><button class="btn btn-dark" onclick="openForm(null,'bulk')">+ New Bulk</button></div></div>`;
+if(bFiltered.length===0) bulkH+=`<div class="card" style="text-align:center;color:#888">No bulk jobs</div>`;
+bFiltered.forEach(j=>{let bal=j.total-j.dep;bulkH+=`<div class="job"><div class="row" style="justify-content:space-between"><div><b>${j.client}</b> <span class="small">${j.phone}</span><div class="small"><b>${j.qty} pcs</b> • ${j.style} • ${j.prog}</div><div class="small">${j.date?'Due '+j.date:''} ${j.note?'• '+j.note:''}</div></div><span style="font-size:11px;padding:5px 10px;border-radius:20px;background:#111;color:#fff">${j.qty} PCS</span></div><div class="small" style="margin-top:8px">Total ₦${j.total.toLocaleString()} • Paid ₦${j.dep.toLocaleString()} • <b style="color:${bal<=0?'#16a34a':'#b45309'}">Bal ₦${bal.toLocaleString()}</b></div><div class="row" style="margin-top:10px"><button class="btn btn-light" onclick="openForm(BULK.find(x=>x.id==='${j.id}'),'bulk')">✏️ Edit</button><button class="btn btn-dark" onclick="addPayBulk('${j.id}')">💰 Payment</button><button class="btn btn-light" onclick="delBulk('${j.id}')">🗑️</button></div></div>`;});
+panelBulk.innerHTML=bulkH;
+let monthly={};[...DB,...BULK].forEach(j=>{let d=new Date(j.created);let k=d.getFullYear()+'-'+(d.getMonth()+1);monthly[k]=(monthly[k]||0)+(j.dep||0);});
+let mkeys=Object.keys(monthly).sort().slice(-6);
+let reportH=`<div class="card"><b>Monthly Report</b><div style="margin-top:12px">${mkeys.map(k=>`<div class="row" style="justify-content:space-between;padding:10px 0;border-bottom:1px solid #f0f0f5"><span class="small">${k}</span><b>₦${monthly[k].toLocaleString()}</b></div>`).join('')||'<div class="small">No data</div>'}</div><div class="row" style="margin-top:14px"><button class="btn btn-dark" style="flex:1;padding:12px" onclick="exportCSV()">📄 Export CSV</button><button class="btn btn-light" style="flex:1;padding:12px" onclick="window.print()">🖨️ Print</button></div></div>`;
+panelReport.innerHTML=reportH;
+let sellH=`<div class="card"><b>Sell Ready Items</b><div class="grid2" style="margin-top:12px"><input class="inp" id="sellItem" placeholder="Item"><input class="inp" type="number" id="sellPrice" placeholder="Price"><input class="inp" type="number" id="sellCost" placeholder="Cost"><button class="btn btn-dark" onclick="addSell()">+ Sale</button></div></div>`;
+SELL.forEach((s,i)=>{sellH+=`<div class="job"><div class="row" style="justify-content:space-between"><div><b>${s.item}</b><div class="small">${new Date(s.created).toLocaleDateString()}</div></div><b style="color:#16a34a">+₦${s.profit.toLocaleString()}</b></div><button class="btn btn-light" onclick="SELL.splice(${i},1);save()">🗑️ Delete</button></div>`;});
+panelSell.innerHTML=sellH;
+}
+function addSell(){let item=sellItem.value.trim();let price=+(sellPrice.value||0);let cost=+(sellCost.value||0);if(!item||!price){alert('Enter item');return;}SELL.unshift({item,price,cost,profit:price-cost,created:Date.now()});save();sellItem.value='';sellPrice.value='';sellCost.value='';}
+function exportCSV(){let rows=[['Type','Name','Style','Qty','Price','Deposit','Balance','Progress','Date']];DB.forEach(j=>rows.push(['Single',j.name,j.style,1,j.price,j.dep,j.price-j.dep,j.status,j.date]));BULK.forEach(j=>rows.push(['Bulk',j.client,j.style,j.qty,j.total,j.dep,j.total-j.dep,j.prog,j.date]));let csv=rows.map(r=>r.map(v=>`"${v}"`).join(',')).join('\n');let a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download='tailor-report.csv';a.click();}
+document.querySelectorAll('#periodPills .pill').forEach(b=>b.onclick=()=>{document.querySelectorAll('#periodPills .pill').forEach(x=>x.classList.remove('active'));b.classList.add('active');period=b.dataset.p;render();});
+document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tabs button').forEach(x=>x.classList.remove('active'));b.classList.add('active');['Customers','Bulk','Report','Sell'].forEach(t=>{document.getElementById('panel'+t).style.display=(t.toLowerCase()===b.dataset.tab?'block':'none')});});
+search.oninput=render;render();
+</script>
+</body>
+</html>
