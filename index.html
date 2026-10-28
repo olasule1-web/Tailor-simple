@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tailor Keeper Full Final</title>
+<style>
+body{margin:0;font-family:Arial;background:#f5f5f7}
+.lock{background:#0f172a;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:24px 16px}
+.lock-box{background:#1e293b;border:1px solid #334155;border-radius:16px;padding:16px;width:100%;max-width:360px;margin-top:16px}
+.inp{width:100%;box-sizing:border-box;background:#0f172a;border:1px solid #334155;border-radius:12px;padding:12px;color:white;margin-bottom:10px}
+.inp-light{width:100%;box-sizing:border-box;background:white;border:1px solid #ddd;border-radius:12px;padding:12px;margin-bottom:10px}
+.top{background:white;padding:12px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:10;box-shadow:0 1px 3px #ddd}
+.logo{width:40px;height:40px;background:#16a34a;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px}
+.card{background:white;border-radius:14px;padding:12px;margin-bottom:10px;border:1px solid #eee}
+.m-card{background:#1e293b;border-radius:14px;padding:14px;margin-bottom:12px;color:white}
+.m-inp{background:#0f172a;border:1px solid #334155;border-radius:10px;padding:10px;color:white;width:100%;box-sizing:border-box}
+.btn{padding:10px 14px;border-radius:20px;border:none;font-weight:bold;font-size:12px}
+.btn-green{background:#16a34a;color:white}
+.btn-dark{background:#1e293b;color:white}
+.small{font-size:11px;color:#888}
+.filter{padding:7px 12px;border-radius:20px;border:1px solid #ddd;background:white;font-size:11px;white-space:nowrap}
+.filter.active{background:#2563eb;color:white;border-color:#2563eb}
+.tab{flex:1;padding:8px;border-radius:20px;border:none;font-size:11px}
+.tab.active{background:black;color:white}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.grid4{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.progress{height:8px;background:#eee;border-radius:10px;margin-top:6px;overflow:hidden}
+.progress-bar{height:100%;background:#16a34a;border-radius:10px}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:50;display:none;align-items:center;justify-content:center;padding:16px}
+.modal-box{background:white;border-radius:16px;padding:16px;width:100%;max-width:360px;max-height:90vh;overflow:auto}
+.lang-btn{padding:6px 10px;border-radius:20px;border:1px solid #ddd;background:white;font-size:11px;font-weight:bold}
+</style>
+</head>
+<body>
+<div id="app">Loading...</div>
+<div id="modal" class="modal"><div id="modalBox" class="modal-box"></div></div>
+<script>
+var lang="en";
+var t={
+ en:{login:"Login",signup:"Sign Up",shop:"Shop Name",pass:"Password",enter:"Enter →",create:"Create Account",email:"Email",phone:"Phone",welcome:"Welcome back",newAcc:"Create account",totalSales:"Total Sales",received:"Received",outstanding:"Outstanding",profit:"Real Profit",search:"Search customers...",customers:"Customers",bulk:"Bulk",report:"Report",sell:"Sell",custOrders:"Customer Orders",newBtn:"+ New",pay:"💰 Payment",measure:"📏 Measurements + Custom",addPay:"Add Payment",amount:"Amount",confirm:"Confirm Payment",cancel:"Cancel",name:"Customer Name",type:"Cloth Type",total:"Total ₦",paid:"Paid ₦",createCust:"Create Customer →",allTime:"All Time",thisMonth:"This Month",quarter:"Quarter",year:"Year",showing:"Showing",custom:"Custom",paidLeft:"left",paidPct:"paid",logout:"Logout",save:"Save Changes",edit:"Edit to make changes",upper:"Upper Body",lower:"Lower Body",extra:"Extra",customTitle:"Custom Measurements",addCustom:"+ Add",addAny:"+ Add ANY Measurement",noCustom:"No custom yet - Tap Edit → + Add"},
+ ha:{login:"Shiga",signup:"Yi Rajista",shop:"Sunan Shago",pass:"Kalmar Sirri",enter:"Shiga →",create:"Kirkira Account",email:"Imel",phone:"Waya",welcome:"Barka da dawowa",newAcc:"Kirkira sabon account",totalSales:"Jimillar Tallace",received:"An Karba",outstanding:"Bashi",profit:"Riba",search:"Nemo abokin ciniki...",customers:"Abokan Ciniki",bulk:"Gungu",report:"Rahoto",sell:"Sayarwa",custOrders:"Odin Abokan Ciniki",newBtn:"+ Sabo",pay:"💰 Biya",measure:"📏 Aunawa + Custom",addPay:"Kara Biya",amount:"Adadi",confirm:"Tabbatar Biya",cancel:"Soke",name:"Sunan Abokin Ciniki",type:"Nau'in Kaya",total:"Jimla ₦",paid:"An Biya ₦",createCust:"Kirkira →",allTime:"Duk Lokaci",thisMonth:"Wannan Wata",quarter:"Kwata",year:"Shekara",showing:"Ana nuna",custom:"Custom",paidLeft:"ragowa",paidPct:"an biya",logout:"Fita",save:"Ajiye",edit:"Gyara",upper:"Jikin Sama",lower:"Jikin Kasa",extra:"Kari",customTitle:"Aunawar Custom",addCustom:"+ Kara",addAny:"+ Kara kowace aunawa",noCustom:"Babu custom - Danna Edit"}
+};
+function tr(k){ return t[lang][k]||k; }
+
+var customers=[
+ {id:1,name:"Abdul Sulaiman",type:"2 Kaftan",total:23000,cost:4500,profit:18500,paid:10000,date:"2026-10-26",phone:"080123",bust:"0",shoulder:"0",sleeve:"0",topLen:"0",waist:"0",hip:"0",trouser:"0",neck:"0",custom:[]},
+ {id:2,name:"Aisha Bello",type:"2 Bubu",total:25000,cost:20200,profit:4800,paid:12000,date:"2026-10-28",phone:"080456",bust:"38",shoulder:"16",sleeve:"24",topLen:"30",waist:"34",hip:"40",trouser:"42",neck:"15",custom:[{n:"Armhole",v:"18"}]},
+ {id:3,name:"Chinedu Okoro",type:"3 Agbada",total:45000,cost:15000,profit:30000,paid:45000,date:"2026-10-20",phone:"080789",bust:"42",shoulder:"18",sleeve:"26",topLen:"36",waist:"38",hip:"44",trouser:"44",neck:"16",custom:[]}
+];
+var current=null; var edit=false; var logged=false; var shopName="Luky"; var filter="All Time"; var tab="Customers"; var search=""; var authTab="login";
+
+function showLock(){
+ var h='<div class="lock"><div style="display:flex;gap:8px;position:absolute;top:12px;right:12px"><button class="lang-btn" onclick="lang=\'en\';showLock()">EN</button><button class="lang-btn" onclick="lang=\'ha\';showLock()">HA</button></div>';
+ h+='<div style="width:70px;height:70px;background:#16a34a;border-radius:20px;display:flex;align-items:center;justify-content:center;font-size:36px;margin-top:20px;box-shadow:0 4px 12px rgba(22,163,74,0.4)">✂️</div><div style="color:white;font-weight:bold;font-size:22px;margin-top:12px">Tailor Keeper</div><div style="color:#94a3b8;font-size:12px">✂️ Scissors Logo - Order & Measurement</div>';
+ h+='<div class="lock-box"><div style="display:flex;background:#0f172a;border-radius:20px;padding:4px;margin-bottom:12px"><button onclick="authTab=\'login\';showLock()" style="flex:1;padding:8px;border-radius:20px;border:none;font-weight:bold;background:'+(authTab==='login'?'white':'transparent')+';color:'+(authTab==='login'?'black':'#94a3b8')+'">'+tr('login')+'</button><button onclick="authTab=\'signup\';showLock()" style="flex:1;padding:8px;border-radius:20px;border:none;font-weight:bold;background:'+(authTab==='signup'?'white':'transparent')+';color:'+(authTab==='signup'?'black':'#94a3b8')+'">'+tr('signup')+'</button></div>';
+ if(authTab==='login'){
+  h+='<div style="color:white;font-weight:bold;margin-bottom:10px">'+tr('welcome')+'</div><input id="shop" value="Luky" class="inp" placeholder="'+tr('shop')+'"><input id="pass" type="password" class="inp" placeholder="'+tr('pass')+'"><button class="btn btn-green" style="width:100%" onclick="doLogin()">'+tr('enter')+'</button>';
+ }else{
+  h+='<div style="color:white;font-weight:bold;margin-bottom:10px">'+tr('newAcc')+'</div><input id="s_shop" class="inp" placeholder="'+tr('shop')+'"><input id="s_email" class="inp" placeholder="'+tr('email')+'"><input id="s_phone" class="inp" placeholder="'+tr('phone')+'"><input id="s_pass" type="password" class="inp" placeholder="'+tr('pass')+'"><button class="btn btn-green" style="width:100%" onclick="doSignup()">'+tr('create')+'</button>';
+ }
+ h+='</div></div>';
+ document.getElementById('app').innerHTML=h;
+}
+function doLogin(){ var s=document.getElementById('shop').value; var p=document.getElementById('pass').value; if(s===""||p===""){alert("Enter shop and password");return;} shopName=s; logged=true; showList(); }
+function doSignup(){ var s=document.getElementById('s_shop').value; var pw=document.getElementById('s_pass').value; if(s===""||pw===""){alert("Enter shop and password");return;} shopName=s; logged=true; showList(); }
+function doLogout(){ logged=false; showLock(); }
+function getFiltered(){
+ var now=new Date(); var out=[];
+ for(var i=0;i<customers.length;i++){
+  var c=customers[i]; var d=new Date(c.date); var ok=true;
+  if(filter==="This Month"){ ok=(d.getMonth()===now.getMonth()&&d.getFullYear()===now.getFullYear()); }
+  if(filter==="This Quarter"){ var q=Math.floor(now.getMonth()/3); var oq=Math.floor(d.getMonth()/3); ok=(oq===q&&d.getFullYear()===now.getFullYear()); }
+  if(filter==="This Year"){ ok=(d.getFullYear()===now.getFullYear()); }
+  if(!ok) continue;
+  if(search!==""&&c.name.toLowerCase().indexOf(search.toLowerCase())==-1&&c.type.toLowerCase().indexOf(search.toLowerCase())==-1) continue;
+  out.push(c);
+ }
+ return out;
+}
+function showList(){
+ if(!logged){ showLock(); return; }
+ var list=getFiltered(); var t1=0; var r1=0; var o1=0; var p1=0;
+ for(var i=0;i<list.length;i++){ t1+=list[i].total; r1+=list[i].paid; o1+=(list[i].total-list[i].paid); p1+=list[i].profit; }
+ var h='<div style="max-width:480px;margin:0 auto"><div class="top"><div style="display:flex;gap:8px;align-items:center"><div class="logo">✂️</div><div><b style="font-size:13px">Tailor Keeper</b><div class="small">'+shopName+' - Full</div></div></div><div style="display:flex;gap:6px;align-items:center"><button class="lang-btn" onclick="toggleLang()">'+(lang==='en'?'HA':'EN')+'</button><button onclick="doLogout()" style="font-size:11px;border:1px solid #ddd;padding:6px 10px;border-radius:20px;background:white">'+tr('logout')+'</button></div></div>';
+ h+='<div style="padding:12px"><div style="display:flex;gap:6px;overflow:auto;padding-bottom:6px"><button class="filter '+(filter==='All Time'?'active':'')+'" onclick="filter=\'All Time\';showList()">'+tr('allTime')+'</button><button class="filter '+(filter==='This Month'?'active':'')+'" onclick="filter=\'This Month\';showList()">'+tr('thisMonth')+'</button><button class="filter '+(filter==='This Quarter'?'active':'')+'" onclick="filter=\'This Quarter\';showList()">'+tr('quarter')+'</button><button class="filter '+(filter==='This Year'?'active':'')+'" onclick="filter=\'This Year\';showList()">'+tr('year')+'</button></div>';
+ h+='<div class="small" style="margin:6px 0 10px">'+tr('showing')+': '+filter+' ('+list.length+')</div>';
+ h+='<div class="grid4" style="margin-bottom:12px"><div class="card"><div class="small">'+tr('totalSales')+'</div><b>₦'+t1+'</b></div><div class="card"><div class="small">'+tr('received')+'</div><b>₦'+r1+'</b></div><div class="card"><div class="small">'+tr('outstanding')+'</div><b>₦'+o1+'</b></div><div class="card"><div class="small">'+tr('profit')+'</div><b style="color:#16a34a">₦'+p1+'</b></div></div>';
+ h+='<div style="position:relative;margin-bottom:12px"><input id="search" value="'+search+'" oninput="search=this.value;showList()" placeholder="'+tr('search')+'" style="width:100%;box-sizing:border-box;padding:11px 11px 11px 36px;background:white;border-radius:12px;border:1px solid #eee"><span style="position:absolute;left:12px;top:11px">🔍</span></div>';
+ h+='<div style="display:flex;background:white;border-radius:20px;padding:4px;border:1px solid #eee;margin-bottom:12px"><button class="tab '+(tab==='Customers'?'active':'')+'" onclick="tab=\'Customers\';showList()">'+tr('customers')+'</button><button class="tab '+(tab==='Bulk'?'active':'')+'" onclick="tab=\'Bulk\';showList()">'+tr('bulk')+'</button><button class="tab '+(tab==='Report'?'active':'')+'" onclick="tab=\'Report\';showList()">'+tr('report')+'</button><button class="tab '+(tab==='Sell'?'active':'')+'" onclick="tab=\'Sell\';showList()">'+tr('sell')+'</button></div>';
+ if(tab==='Customers'){
+  h+='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><b style="font-size:13px">'+tr('custOrders')+'</b><button class="btn btn-green" onclick="openNewModal()">'+tr('newBtn')+'</button></div>';
+  for(var i=0;i<list.length;i++){
+   var c=list[i]; var perc=Math.round((c.paid/c.total)*100); if(isNaN(perc)) perc=0;
+   h+='<div class="card"><div style="display:flex;justify-content:space-between"><div><b style="font-size:13px">'+c.name+'</b><div class="small">'+c.type+' · Total ₦'+c.total+' · Paid ₦'+c.paid+' · '+tr('custom')+':'+c.custom.length+'</div></div><button onclick="deleteCustomer('+c.id+')" style="color:red;border:none;background:none;font-size:11px">Del</button></div><div class="progress"><div class="progress-bar" style="width:'+perc+'%"></div></div><div style="display:flex;justify-content:space-between;margin-top:4px" class="small"><span style="color:green">'+perc+'% '+tr('paidPct')+'</span><span style="color:orange;font-weight:bold">₦'+(c.total-c.paid)+' '+tr('paidLeft')+'</span></div><div style="display:flex;gap:6px;margin-top:8px"><button class="btn" style="flex:1;background:#e8f5e9;color:#16a34a;border:1px solid #16a34a" onclick="openPayModal('+c.id+')">'+tr('pay')+'</button><button class="btn btn-dark" style="flex:2" onclick="openCustomer('+c.id+')">'+tr('measure')+'</button></div></div>';
+  }
+ }else{
+  h+='<div class="card" style="text-align:center;padding:30px"><b>'+tab+'</b><div class="small">Tab kept</div></div>';
+ }
+ h+='</div></div>';
+ document.getElementById('app').innerHTML=h;
+}
+function toggleLang(){ lang=(lang==='en'?'ha':'en'); if(logged) showList(); else showLock(); }
+function openNewModal(){
+ var h='<b>✂️ '+tr('newBtn')+' - '+tr('name')+'</b><div style="margin-top:10px"><input id="n_name" class="inp-light" placeholder="'+tr('name')+'"><input id="n_type" class="inp-light" placeholder="'+tr('type')+' e.g. 2 Kaftan"><div class="grid2"><input id="n_total" type="number" class="inp-light" placeholder="'+tr('total')+'"><input id="n_paid" type="number" class="inp-light" placeholder="'+tr('paid')+'"></div><input id="n_phone" class="inp-light" placeholder="'+tr('phone')+'"><input id="n_date" type="date" value="'+new Date().toISOString().slice(0,10)+'" class="inp-light"><button class="btn btn-green" style="width:100%;padding:14px" onclick="saveNewCustomer()">'+tr('createCust')+'</button><button class="btn" style="width:100%;margin-top:8px;background:#eee" onclick="closeModal()">'+tr('cancel')+'</button></div>';
+ document.getElementById('modalBox').innerHTML=h; document.getElementById('modal').style.display='flex';
+}
+function saveNewCustomer(){
+ var name=document.getElementById('n_name').value; if(name===""){alert("Enter name");return;}
+ var type=document.getElementById('n_type').value||"1 Order"; var total=parseInt(document.getElementById('n_total').value)||20000; var paid=parseInt(document.getElementById('n_paid').value)||0; var phone=document.getElementById('n_phone').value||""; var date=document.getElementById('n_date').value||new Date().toISOString().slice(0,10);
+ customers.unshift({id:Date.now(),name:name,type:type,total:total,cost:Math.round(total*0.4),profit:total-Math.round(total*0.4),paid:paid,date:date,phone:phone,bust:"0",shoulder:"0",sleeve:"0",topLen:"0",waist:"0",hip:"0",trouser:"0",neck:"0",custom:[]});
+ closeModal(); showList();
+}
+function openPayModal(id){
+ var c=null; for(var i=0;i<customers.length;i++){ if(customers[i].id===id){ c=customers[i]; break; } }
+ if(!c) return; var left=c.total-c.paid;
+ var h='<b>💰 '+tr('addPay')+' - '+c.name+'</b><div class="small" style="margin:6px 0">Total: ₦'+c.total+' | Paid: ₦'+c.paid+' | Left: ₦'+left+'</div><input id="pay_amount" type="number" class="inp-light" placeholder="'+tr('amount')+' e.g. 5000"><div class="grid2" style="margin-top:8px"><button class="btn" style="background:#e8f5e9;color:#16a34a;border:1px solid #16a34a" onclick="setPay(5000)">₦5000</button><button class="btn" style="background:#e8f5e9;color:#16a34a;border:1px solid #16a34a" onclick="setPay('+left+')">Pay All</button></div><button class="btn btn-green" style="width:100%;padding:14px;margin-top:12px" onclick="savePayment('+id+')">'+tr('confirm')+'</button><button class="btn" style="width:100%;margin-top:8px;background:#eee" onclick="closeModal()">'+tr('cancel')+'</button>';
+ document.getElementById('modalBox').innerHTML=h; document.getElementById('modal').style.display='flex';
+}
+function setPay(v){ document.getElementById('pay_amount').value=v; }
+function savePayment(id){
+ var amt=parseInt(document.getElementById('pay_amount').value)||0; if(amt<=0){alert("Enter amount");return;}
+ for(var i=0;i<customers.length;i++){ if(customers[i].id===id){ customers[i].paid+=amt; if(customers[i].paid>customers[i].total) customers[i].paid=customers[i].total; break; } }
+ closeModal(); showList();
+}
+function closeModal(){ document.getElementById('modal').style.display='none'; }
+function openCustomer(id){ for(var i=0;i<customers.length;i++){ if(customers[i].id===id){ current=customers[i]; break; } } edit=false; renderMeasure(); }
+function renderMeasure(){
+ var c=current;
+ var h='<div style="max-width:480px;margin:0 auto;background:#0f172a;min-height:100vh;color:white"><div style="padding:12px;display:flex;gap:10px;align-items:center;position:sticky;top:0;background:#0f172a;border-bottom:1px solid #1e293b;z-index:5"><button onclick="showList()" style="background:none;border:none;color:white;font-size:22px">←</button><div><b>'+c.name+'</b><div style="font-size:10px;color:#94a3b8">Measurements ONLY - Info/Order removed ✓</div></div><button onclick="edit=!edit;renderMeasure()" style="margin-left:auto;width:36px;height:36px;background:#10b981;border-radius:50%;border:none">✏️</button></div>';
+ h+='<div style="padding:12px;border-bottom:1px solid #1e293b"><span style="color:#10b981;font-weight:bold;border-bottom:2px solid #10b981;padding-bottom:10px">'+tr('measure')+'</span></div><div style="padding:12px;display:flex;flex-direction:column;gap:12px;padding-bottom:90px">';
+ h+='<div class="m-card"><b>📏 '+tr('upper')+'</b><div class="grid2" style="margin-top:10px"><div><div class="small" style="color:#94a3b8">Bust</div><input id="bust" value="'+c.bust+'" '+(edit?'':'disabled')+' class="m-inp"></div><div><div class="small" style="color:#94a3b8">Shoulder</div><input id="shoulder" value="'+c.shoulder+'" '+(edit?'':'disabled')+' class="m-inp"></div><div><div class="small" style="color:#94a3b8">Sleeve</div><input id="sleeve" value="'+c.sleeve+'" '+(edit?'':'disabled')+' class="m-inp"></div><div><div class="small" style="color:#94a3b8">Top Length</div><input id="topLen" value="'+c.topLen+'" '+(edit?'':'disabled')+' class="m-inp"></div></div></div>';
+ h+='<div class="m-card"><b>📏 '+tr('lower')+'</b><div class="grid2" style="margin-top:10px"><div><div class="small" style="color:#94a3b8">Waist</div><input id="waist" value="'+c.waist+'" '+(edit?'':'disabled')+' class="m-inp"></div><div><div class="small" style="color:#94a3b8">Hip</div><input id="hip" value="'+c.hip+'" '+(edit?'':'disabled')+' class="m-inp"></div><div style="grid-column:span 2"><div class="small" style="color:#94a3b8">Trouser</div><input id="trouser" value="'+c.trouser+'" '+(edit?'':'disabled')+' class="m-inp"></div></div></div>';
+ h+='<div class="m-card"><b>📏 '+tr('extra')+'</b><div style="margin-top:10px"><div class="small" style="color:#94a3b8">Neck</div><input id="neck" value="'+c.neck+'" '+(edit?'':'disabled')+' class="m-inp"></div><div style="margin-top:16px;border-top:2px solid #10b981;padding-top:12px"><div style="display:flex;justify-content:space-between;align-items:center"><b style="color:#10b981">📐 '+tr('customTitle')+'</b>'+(edit?'<button onclick="addCustom()" style="background:#10b981;color:white;border:none;padding:6px 10px;border-radius:20px;font-size:11px">'+tr('addCustom')+'</button>':'')+'</div><div class="small" style="color:#10b981;margin:6px 0">Add ANY measurement</div>';
+ for(var j=0;j<c.custom.length;j++){
+  h+='<div style="display:flex;gap:6px;margin-bottom:8px"><input value="'+c.custom[j].n+'" id="cn'+j+'" placeholder="Name e.g. Knee" '+(edit?'':'disabled')+' style="flex:1;background:#0f172a;border:1px solid #10b981;border-radius:10px;padding:10px;color:white"><input value="'+c.custom[j].v+'" id="cv'+j+'" placeholder="Value" '+(edit?'':'disabled')+' style="width:60px;background:#0f172a;border:1px solid #334155;border-radius:10px;padding:10px;color:white;text-align:center">'+(edit?'<button onclick="delCustom('+j+')" style="width:28px;background:#7f1d1d;border:none;border-radius:50%;color:white">×</button>':'')+'</div>';
+ }
+ if(c.custom.length===0){ h+='<div style="text-align:center;padding:16px;border:2px dashed #10b981;border-radius:12px;color:#10b981">'+tr('noCustom')+'</div>'; }
+ if(edit){ h+='<button onclick="addCustom()" style="width:100%;margin-top:10px;padding:12px;border:2px dashed #10b981;background:rgba(16,185,129,0.1);color:#10b981;border-radius:12px;font-weight:bold">'+tr('addAny')+'</button>'; }
+ h+='</div></div></div><div style="position:fixed;bottom:0;left:0;right:0;padding:12px;background:#0f172a;border-top:1px solid #1e293b"><div style="max-width:480px;margin:0 auto">'+(edit?'<button class="btn btn-green" style="width:100%;padding:14px" onclick="saveMeasure()">'+tr('save')+'</button>':'<button class="btn" style="width:100%;padding:14px;background:#14532d;color:#6ee7b7;border:none;border-radius:12px" onclick="edit=true;renderMeasure()">'+tr('edit')+'</button>')+'</div></div></div>';
+ document.getElementById('app').innerHTML=h;
+}
+function addCustom(){ current.custom.push({n:"",v:""}); renderMeasure(); edit=true; }
+function delCustom(i){ current.custom.splice(i,1); renderMeasure(); }
+function saveMeasure(){
+ current.bust=document.getElementById('bust').value; current.shoulder=document.getElementById('shoulder').value; current.sleeve=document.getElementById('sleeve').value; current.topLen=document.getElementById('topLen').value; current.waist=document.getElementById('waist').value; current.hip=document.getElementById('hip').value; current.trouser=document.getElementById('trouser').value; current.neck=document.getElementById('neck').value;
+ for(var j=0;j<current.custom.length;j++){ var nn=document.getElementById('cn'+j); var vv=document.getElementById('cv'+j); if(nn) current.custom[j].n=nn.value; if(vv) current.custom[j].v=vv.value; }
+ edit=false; renderMeasure();
+}
+function deleteCustomer(id){ if(confirm("Delete?")){ var arr=[]; for(var i=0;i<customers.length;i++){ if(customers[i].id!==id) arr.push(customers[i]); } customers=arr; showList(); } }
+
+showLock();
+</script>
+</body>
+</html>
