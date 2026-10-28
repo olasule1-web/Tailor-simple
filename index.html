@@ -133,4 +133,23 @@ function renderMeasure(){
  h+='<div class="m-card"><b>📏 '+tr('lower')+'</b><div class="grid2" style="margin-top:10px"><div><div class="small" style="color:#94a3b8">Waist</div><input id="waist" value="'+c.waist+'" '+(edit?'':'disabled')+' class="m-inp"></div><div><div class="small" style="color:#94a3b8">Hip</div><input id="hip" value="'+c.hip+'" '+(edit?'':'disabled')+' class="m-inp"></div><div style="grid-column:span 2"><div class="small" style="color:#94a3b8">Trouser</div><input id="trouser" value="'+c.trouser+'" '+(edit?'':'disabled')+' class="m-inp"></div></div></div>';
  h+='<div class="m-card"><b>📏 '+tr('extra')+'</b><div style="margin-top:10px"><div class="small" style="color:#94a3b8">Neck</div><input id="neck" value="'+c.neck+'" '+(edit?'':'disabled')+' class="m-inp"></div><div style="margin-top:16px;border-top:2px solid #10b981;padding-top:12px"><div style="display:flex;justify-content:space-between;align-items:center"><b style="color:#10b981">📐 '+tr('customTitle')+'</b>'+(edit?'<button onclick="addCustom()" style="background:#10b981;color:white;border:none;padding:6px 10px;border-radius:20px;font-size:11px">'+tr('addCustom')+'</button>':'')+'</div><div class="small" style="color:#10b981;margin:6px 0">Add ANY measurement</div>';
  for(var j=0;j<c.custom.length;j++){
-  h+='<div style="display:flex;gap:6px;margin-bottom:8px"><input value="'+c.custom[j].n+'" id="cn'+j+'" placeholder="Name e.g. Knee" '+(edit?'':'d
+  h+='<div style="display:flex;gap:6px;margin-bottom:8px"><input value="'+c.custom[j].n+'" id="cn'+j+'" placeholder="Name e.g. Knee" '+(edit?'':'disabled')+' style="flex:1;background:#0f172a;border:1px solid #10b981;border-radius:10px;padding:10px;color:white"><input value="'+c.custom[j].v+'" id="cv'+j+'" placeholder="Value" '+(edit?'':'disabled')+' style="width:60px;background:#0f172a;border:1px solid #334155;border-radius:10px;padding:10px;color:white;text-align:center">'+(edit?'<button onclick="delCustom('+j+')" style="width:28px;background:#7f1d1d;border:none;border-radius:50%;color:white">×</button>':'')+'</div>';
+ }
+ if(c.custom.length===0){ h+='<div style="text-align:center;padding:16px;border:2px dashed #10b981;border-radius:12px;color:#10b981">'+tr('noCustom')+'</div>'; }
+ if(edit){ h+='<button onclick="addCustom()" style="width:100%;margin-top:10px;padding:12px;border:2px dashed #10b981;background:rgba(16,185,129,0.1);color:#10b981;border-radius:12px;font-weight:bold">'+tr('addAny')+'</button>'; }
+ h+='</div></div></div><div style="position:fixed;bottom:0;left:0;right:0;padding:12px;background:#0f172a;border-top:1px solid #1e293b"><div style="max-width:480px;margin:0 auto">'+(edit?'<button class="btn btn-green" style="width:100%;padding:14px" onclick="saveMeasure()">'+tr('save')+'</button>':'<button class="btn" style="width:100%;padding:14px;background:#14532d;color:#6ee7b7;border:none;border-radius:12px" onclick="edit=true;renderMeasure()">'+tr('edit')+'</button>')+'</div></div></div>';
+ document.getElementById('app').innerHTML=h;
+}
+function addCustom(){ current.custom.push({n:"",v:""}); renderMeasure(); edit=true; }
+function delCustom(i){ current.custom.splice(i,1); renderMeasure(); }
+function saveMeasure(){
+ current.bust=document.getElementById('bust').value; current.shoulder=document.getElementById('shoulder').value; current.sleeve=document.getElementById('sleeve').value; current.topLen=document.getElementById('topLen').value; current.waist=document.getElementById('waist').value; current.hip=document.getElementById('hip').value; current.trouser=document.getElementById('trouser').value; current.neck=document.getElementById('neck').value;
+ for(var j=0;j<current.custom.length;j++){ var nn=document.getElementById('cn'+j); var vv=document.getElementById('cv'+j); if(nn) current.custom[j].n=nn.value; if(vv) current.custom[j].v=vv.value; }
+ edit=false; renderMeasure();
+}
+function deleteCustomer(id){ if(confirm("Delete?")){ var arr=[]; for(var i=0;i<customers.length;i++){ if(customers[i].id!==id) arr.push(customers[i]); } customers=arr; showList(); } }
+
+showLock();
+</script>
+</body>
+</html>
