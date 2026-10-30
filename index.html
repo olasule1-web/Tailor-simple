@@ -1,142 +1,624 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tailor Keeper Full Final</title>
+<title>Tailor Keeper - Full System</title>
 <style>
-body{margin:0;font-family:Arial;background:#f5f5f7}
-.lock{background:#0f172a;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:24px 16px}
-.lock-box{background:#1e293b;border:1px solid #334155;border-radius:16px;padding:16px;width:100%;max-width:360px;margin-top:16px}
-.inp{width:100%;box-sizing:border-box;background:#0f172a;border:1px solid #334155;border-radius:12px;padding:12px;color:white;margin-bottom:10px}
-.inp-light{width:100%;box-sizing:border-box;background:white;border:1px solid #ddd;border-radius:12px;padding:12px;margin-bottom:10px}
-.top{background:white;padding:12px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:10;box-shadow:0 1px 3px #ddd}
-.logo{width:40px;height:40px;background:#16a34a;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px}
-.card{background:white;border-radius:14px;padding:12px;margin-bottom:10px;border:1px solid #eee}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:#f5f5f7;color:#1e293b}
+.lock{background:#0f172a;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:24px 16px;box-sizing:border-box}
+.lock-box{background:#1e293b;border:1px solid #334155;border-radius:16px;padding:20px;width:100%;max-width:360px;margin-top:16px}
+.inp{width:100%;box-sizing:border-box;background:#0f172a;border:1px solid #334155;border-radius:12px;padding:12px;color:white;margin-bottom:10px;font-size:14px}
+.inp-light{width:100%;box-sizing:border-box;background:white;border:1px solid #cbd5e1;border-radius:10px;padding:10px;margin-bottom:10px;font-size:13px}
+.top{background:white;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:10;box-shadow:0 1px 3px rgba(0,0,0,0.05)}
+.logo{width:36px;height:36px;background:#16a34a;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px}
+.card{background:white;border-radius:14px;padding:14px;margin-bottom:10px;border:1px solid #e2e8f0;box-shadow:0 1px 2px rgba(0,0,0,0.02)}
 .m-card{background:#1e293b;border-radius:14px;padding:14px;margin-bottom:12px;color:white}
 .m-inp{background:#0f172a;border:1px solid #334155;border-radius:10px;padding:10px;color:white;width:100%;box-sizing:border-box}
-.btn{padding:10px 14px;border-radius:20px;border:none;font-weight:bold;font-size:12px;cursor:pointer}
+.btn{padding:10px 14px;border-radius:12px;border:none;font-weight:600;font-size:12px;cursor:pointer}
 .btn-green{background:#16a34a;color:white}
 .btn-dark{background:#1e293b;color:white}
-.small{font-size:11px;color:#888}
-.filter{padding:7px 12px;border-radius:20px;border:1px solid #ddd;background:white;font-size:11px;white-space:nowrap}
+.small{font-size:11px;color:#64748b}
+.filter{padding:7px 14px;border-radius:20px;border:1px solid #cbd5e1;background:white;font-size:11px;white-space:nowrap;cursor:pointer}
 .filter.active{background:#2563eb;color:white;border-color:#2563eb}
-.tab{flex:1;padding:8px;border-radius:20px;border:none;font-size:11px;cursor:pointer}
-.tab.active{background:black;color:white}
+.tab{flex:1;padding:8px 0;border-radius:20px;border:none;font-size:12px;cursor:pointer;background:transparent;color:#64748b;font-weight:600}
+.tab.active{background:#0f172a;color:white}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .grid4{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.progress{height:8px;background:#eee;border-radius:10px;margin-top:6px;overflow:hidden}
+.progress{height:7px;background:#f1f5f9;border-radius:10px;margin-top:6px;overflow:hidden}
 .progress-bar{height:100%;background:#16a34a;border-radius:10px}
 .modal{position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:50;display:none;align-items:center;justify-content:center;padding:16px}
-.modal-box{background:white;border-radius:16px;padding:16px;width:100%;max-width:360px;max-height:90vh;overflow:auto}
-.lang-btn{padding:6px 10px;border-radius:20px;border:1px solid #ddd;background:white;font-size:11px;font-weight:bold}
+.modal-box{background:white;border-radius:16px;padding:18px;width:100%;max-width:380px;max-height:90vh;overflow-y:auto;box-sizing:border-box}
+.lang-btn{padding:5px 10px;border-radius:15px;border:1px solid #cbd5e1;background:white;font-size:11px;font-weight:bold;cursor:pointer}
+.badge{display:inline-block;padding:3px 8px;border-radius:12px;font-size:10px;font-weight:bold}
+.table-ui{width:100%;border-collapse:collapse;font-size:12px;text-align:left;margin-top:8px}
+.table-ui th,.table-ui td{padding:8px 6px;border-bottom:1px solid #f1f5f9}
 </style>
 </head>
 <body>
 <div id="app">Loading...</div>
 <div id="modal" class="modal"><div id="modalBox" class="modal-box"></div></div>
+
 <script>
-var lang="en";
-var t={
- en:{login:"Login",signup:"Sign Up",shop:"Shop Name",pass:"Password",enter:"Enter →",create:"Create Account",email:"Email",phone:"Phone",welcome:"Welcome back",newAcc:"Create account",totalSales:"Total Sales",received:"Received",outstanding:"Outstanding",profit:"Real Profit",search:"Search customers...",customers:"Customers",bulk:"Bulk",report:"Report",sell:"Sell",custOrders:"Customer Orders",newBtn:"+ New",pay:"💰 Payment",measure:"📏 Measurements + Custom",addPay:"Add Payment",amount:"Amount",confirm:"Confirm Payment",cancel:"Cancel",name:"Customer Name",type:"Cloth Type",total:"Total ₦",paid:"Paid ₦",createCust:"Create Customer →",allTime:"All Time",thisMonth:"This Month",quarter:"Quarter",year:"Year",showing:"Showing",custom:"Custom",paidLeft:"left",paidPct:"paid",logout:"Logout",save:"Save Changes",edit:"Edit to make changes",upper:"Upper Body",lower:"Lower Body",extra:"Extra",customTitle:"Custom Measurements",addCustom:"+ Add",addAny:"+ Add ANY Measurement",noCustom:"No custom yet - Tap Edit → + Add",bulkTitle:"Bulk Sewing Jobs",sellTitle:"Sell Ready Items"},
- ha:{login:"Shiga",signup:"Yi Rajista",shop:"Sunan Shago",pass:"Kalmar Sirri",enter:"Shiga →",create:"Kirkira Account",email:"Imel",phone:"Waya",welcome:"Barka da dawowa",newAcc:"Kirkira sabon account",totalSales:"Jimillar Tallace",received:"An Karba",outstanding:"Bashi",profit:"Riba",search:"Nemo abokan ciniki...",customers:"Abokan Ciniki",bulk:"Gungu",report:"Rahoto",sell:"Sayarwa",custOrders:"Odin Abokan Ciniki",newBtn:"+ Sabo",pay:"💰 Biya",measure:"📏 Aunawa + Custom",addPay:"Kara Biya",amount:"Adadi",confirm:"Tabbatar Biya",cancel:"Soke",name:"Sunan Abokin Ciniki",type:"Nau'in Kaya",total:"Jimla ₦",paid:"An Biya ₦",createCust:"Kirkira →",allTime:"Duk Lokaci",thisMonth:"Wannan Wata",quarter:"Kwata",year:"Shekara",showing:"Ana nuna",custom:"Custom",paidLeft:"ragowa",paidPct:"an biya",logout:"Fita",save:"Ajiye",edit:"Gyara",upper:"Jikin Sama",lower:"Jikin Kasa",extra:"Kari",customTitle:"Aunawar Custom",addCustom:"+ Kara",addAny:"+ Kara kowace aunawa",noCustom:"Babu custom - Danna Edit",bulkTitle:"Aikin Gungu",sellTitle:"Sayar da Kaya"}
+var lang = "en";
+var t = {
+ en: {
+  login:"Login", signup:"Sign Up", shop:"Shop Name", pass:"Password", enter:"Enter →", create:"Create Account",
+  email:"Email", phone:"Phone", welcome:"Welcome back", newAcc:"Create account", totalSales:"Total Sales",
+  received:"Received", outstanding:"Outstanding", profit:"Real Profit", cost:"Total Expenses", search:"Search orders...",
+  customers:"Customers", bulk:"Bulk / School", report:"Report & Analytics", sell:"Quick Sell", custOrders:"Customer Orders",
+  bulkOrders:"School & Institutional Contracts", newBtn:"+ New Order", newBulkBtn:"+ New Bulk Contract",
+  pay:"💰 Payment", measure:"📏 Measurements", addPay:"Record Payment", amount:"Amount", confirm:"Save Payment",
+  cancel:"Cancel", name:"Customer / School Name", type:"Uniform / Garment Type", total:"Total ₦",
+  costLabel:"Material / Production Cost ₦", paid:"Deposit Paid ₦", createCust:"Save Customer →",
+  createBulk:"Confirm Bulk Contract →", allTime:"All Time", thisMonth:"This Month", quarter:"Quarter", year:"Year",
+  showing:"Showing", custom:"Custom", paidLeft:"left", paidPct:"paid", logout:"Logout", save:"Save Changes",
+  edit:"Edit Measurements", upper:"Upper Body", lower:"Lower Body", extra:"Extra / Neck",
+  customTitle:"Custom Fields", addCustom:"+ Add", addAny:"+ Add ANY Measurement", noCustom:"No custom fields recorded",
+  exportCsv:"Export Full Report", schoolName:"School / Organization Name", qty:"Quantity (Pairs/Pcs)", unitPrice:"Price Per Piece ₦",
+  unitCost:"Cost Per Piece ₦", deadline:"Delivery Deadline", completed:"Sewn / Delivered"
+ },
+ ha: {
+  login:"Shiga", signup:"Yi Rajista", shop:"Sunan Shago", pass:"Kalmar Sirri", enter:"Shiga →", create:"Kirkira Account",
+  email:"Imel", phone:"Waya", welcome:"Barka da dawowa", newAcc:"Kirkira sabon account", totalSales:"Jimillar Tallace",
+  received:"An Karba", outstanding:"Bashi", profit:"Riba", cost:"Kudin Kashewa", search:"Nemo...",
+  customers:"Abokan Ciniki", bulk:"Dinkin Gungu / Makarantu", report:"Rahoto", sell:"Sayarwa", custOrders:"Odin Mutum",
+  bulkOrders:"Kwantiragin Makarantu", newBtn:"+ Sabon Odi", newBulkBtn:"+ Sabon Dinkin Gungu", pay:"💰 Biya",
+  measure:"📏 Aunawa", addPay:"Kara Biya", amount:"Adadi", confirm:"Tabbatar Biya", cancel:"Soke",
+  name:"Sunan Aboki / Makarantar", type:"Nau'in Uniform", total:"Jimla ₦", costLabel:"Kudin Dinki/Kayan Aiki ₦",
+  paid:"An Biya ₦", createCust:"Ajiye Odi →", createBulk:"Tabbatar da Kwantiragi →", allTime:"Duk Lokaci",
+  thisMonth:"Wannan Wata", quarter:"Kwata", year:"Shekara", showing:"Ana nuna", custom:"Custom", paidLeft:"ragowa",
+  paidPct:"an biya", logout:"Fita", save:"Ajiye", edit:"Gyara", upper:"Jikin Sama", lower:"Jikin Kasa", extra:"Kari",
+  customTitle:"Aunawar Custom", addCustom:"+ Kara", addAny:"+ Kara kowace aunawa", noCustom:"Babu custom tukuna",
+  exportCsv:"Sauke Rahoto", schoolName:"Sunan Makaranta", qty:"Adadin Kaya (Pcs)", unitPrice:"Farashin Guda ₦",
+  unitCost:"Kudin Yadi/Guda ₦", deadline:"Ranar Bayarwa", completed:"Wanda aka dinka"
+ }
 };
-function tr(k){ return t[lang][k]||k; }
+function tr(k){ return (t[lang] && t[lang][k]) || k; }
 
-var customers=[
- {id:1,name:"Abdul Sulaiman",type:"2 Kaftan",total:23000,cost:4500,profit:18500,paid:10000,date:"2026-10-26",phone:"080123",bust:"0",shoulder:"0",sleeve:"0",topLen:"0",waist:"0",hip:"0",trouser:"0",neck:"0",custom:[]},
- {id:2,name:"Aisha Bello",type:"2 Bubu",total:25000,cost:20200,profit:4800,paid:12000,date:"2026-10-28",phone:"080456",bust:"38",shoulder:"16",sleeve:"24",topLen:"30",waist:"34",hip:"40",trouser:"42",neck:"15",custom:[{n:"Armhole",v:"18"}]},
- {id:3,name:"Chinedu Okoro",type:"3 Agbada",total:45000,cost:15000,profit:30000,paid:45000,date:"2026-10-20",phone:"080789",bust:"42",shoulder:"18",sleeve:"26",topLen:"36",waist:"38",hip:"44",trouser:"44",neck:"16",custom:[]}
+ // FIXED: PERSISTENCE
+var defC=[
+ {id:1,name:"Abdul Sulaiman",type:"2 Kaftan",total:23000,cost:4500,profit:18500,paid:10000,date:"2026-10-26",phone:"0801234567",bust:"38",shoulder:"17",sleeve:"24",topLen:"34",waist:"32",hip:"36",trouser:"40",neck:"15",custom:[]},
+ {id:2,name:"Aisha Bello",type:"2 Bubu",total:25000,cost:10200,profit:14800,paid:25000,date:"2026-10-28",phone:"0804567890",bust:"40",shoulder:"16",sleeve:"23",topLen:"58",waist:"34",hip:"42",trouser:"0",neck:"15.5",custom:[{n:"Armhole",v:"19"}]},
+ {id:3,name:"Chinedu Okoro",type:"3 Agbada",total:45000,cost:15000,profit:30000,paid:20000,date:"2026-09-15",phone:"0807891234",bust:"42",shoulder:"19",sleeve:"26",topLen:"38",waist:"36",hip:"44",trouser:"42",neck:"16.5",custom:[]}
 ];
-var bulkJobs = JSON.parse(localStorage.getItem('tk_bulk')||'[]');
-var sellItems = JSON.parse(localStorage.getItem('tk_sell')||'[]');
-function saveBulkSell(){localStorage.setItem('tk_bulk',JSON.stringify(bulkJobs));localStorage.setItem('tk_sell',JSON.stringify(sellItems));}
+var defB=[
+ {id:101,school:"Prime Academy Minna",type:"Secondary School Uniforms",qty:120,completedQty:65,unitPrice:7500,unitCost:4200,total:900000,cost:504000,profit:396000,paid:600000,contact:"0803322110",date:"2026-10-10",deadline:"2026-11-15"},
+ {id:102,school:"Al-Huda Islamic Model",type:"Girls Hijab & Gown Sets",qty:50,completedQty:50,unitPrice:8000,unitCost:4500,total:400000,cost:225000,profit:175000,paid:400000,contact:"0805544332",date:"2026-10-20",deadline:"2026-10-30"}
+];
+var customers=null;try{customers=JSON.parse(localStorage.getItem('tk_full_c'));}catch(e){}customers=customers||defC;
+var bulkOrders=null;try{bulkOrders=JSON.parse(localStorage.getItem('tk_full_b'));}catch(e){}bulkOrders=bulkOrders||defB;
+function saveAll(){localStorage.setItem('tk_full_c',JSON.stringify(customers));localStorage.setItem('tk_full_b',JSON.stringify(bulkOrders));}
 
-var current=null; var edit=false; var logged=false; var shopName="Luky"; var filter="All Time"; var tab="Customers"; var search=""; var authTab="login";
+var bulkOrders = [
+ {id:101, school:"Prime Academy Minna", type:"Secondary School Uniforms", qty:120, completedQty:65, unitPrice:7500, unitCost:4200, total:900000, cost:504000, profit:396000, paid:600000, contact:"0803322110", date:"2026-10-10", deadline:"2026-11-15", notes:"Green check shirts + green trousers"},
+ {id:102, school:"Al-Huda Islamic Model", type:"Girls Hijab & Gown Sets", qty:50, completedQty:50, unitPrice:8000, unitCost:4500, total:400000, cost:225000, profit:175000, paid:400000, contact:"0805544332", date:"2026-10-20", deadline:"2026-10-30", notes:"Navy blue gown with white embroidered hem"}
+];
+
+var current = null;
+var edit = false;
+var logged = false;
+var shopName = "Luky Tailors";
+var filter = "All Time";
+var tab = "Customers";
+var search = "";
+var authTab = "login";
 
 function showLock(){
  var h='<div class="lock"><div style="display:flex;gap:8px;position:absolute;top:12px;right:12px"><button class="lang-btn" onclick="lang=\'en\';showLock()">EN</button><button class="lang-btn" onclick="lang=\'ha\';showLock()">HA</button></div>';
- h+='<div style="width:70px;height:70px;background:#16a34a;border-radius:20px;display:flex;align-items:center;justify-content:center;font-size:36px;margin-top:20px;box-shadow:0 4px 12px rgba(22,163,74,0.4)">✂️</div><div style="color:white;font-weight:bold;font-size:22px;margin-top:12px">Tailor Keeper</div><div style="color:#94a3b8;font-size:12px">✂️ Scissors Logo - Order & Measurement</div>';
- h+='<div class="lock-box"><div style="display:flex;background:#0f172a;border-radius:20px;padding:4px;margin-bottom:12px"><button onclick="authTab=\'login\';showLock()" style="flex:1;padding:8px;border-radius:20px;border:none;font-weight:bold;background:'+(authTab==='login'?'white':'transparent')+';color:'+(authTab==='login'?'black':'#94a3b8')+'">'+tr('login')+'</button><button onclick="authTab=\'signup\';showLock()" style="flex:1;padding:8px;border-radius:20px;border:none;font-weight:bold;background:'+(authTab==='signup'?'white':'transparent')+';color:'+(authTab==='signup'?'black':'#94a3b8')+'">'+tr('signup')+'</button></div>';
+ h+='<div style="width:64px;height:64px;background:#16a34a;border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:32px;margin-top:20px;box-shadow:0 6px 16px rgba(22,163,74,0.3)">✂️</div><div style="color:white;font-weight:bold;font-size:22px;margin-top:12px">Tailor Keeper</div><div style="color:#94a3b8;font-size:12px;margin-top:2px">Order, School Bulk, Expenses & POS</div>';
+ h+='<div class="lock-box"><div style="display:flex;background:#0f172a;border-radius:20px;padding:4px;margin-bottom:14px"><button onclick="authTab=\'login\';showLock()" style="flex:1;padding:8px;border-radius:20px;border:none;font-weight:bold;font-size:12px;cursor:pointer;background:'+(authTab==='login'?'white':'transparent')+';color:'+(authTab==='login'?'black':'#94a3b8')+'">'+tr('login')+'</button><button onclick="authTab=\'signup\';showLock()" style="flex:1;padding:8px;border-radius:20px;border:none;font-weight:bold;font-size:12px;cursor:pointer;background:'+(authTab==='signup'?'white':'transparent')+';color:'+(authTab==='signup'?'black':'#94a3b8')+'">'+tr('signup')+'</button></div>';
  if(authTab==='login'){
-  h+='<div style="color:white;font-weight:bold;margin-bottom:10px">'+tr('welcome')+'</div><input id="shop" value="Luky" class="inp" placeholder="'+tr('shop')+'"><input id="pass" type="password" class="inp" placeholder="'+tr('pass')+'"><button class="btn btn-green" style="width:100%" onclick="doLogin()">'+tr('enter')+'</button>';
+  h+='<div style="color:white;font-weight:600;font-size:13px;margin-bottom:10px">'+tr('welcome')+'</div><input id="shop" value="'+shopName+'" class="inp" placeholder="'+tr('shop')+'"><input id="pass" value="password" type="password" class="inp" placeholder="'+tr('pass')+'"><button class="btn btn-green" style="width:100%;padding:12px" onclick="doLogin()">'+tr('enter')+'</button>';
  }else{
-  h+='<div style="color:white;font-weight:bold;margin-bottom:10px">'+tr('newAcc')+'</div><input id="s_shop" class="inp" placeholder="'+tr('shop')+'"><input id="s_email" class="inp" placeholder="'+tr('email')+'"><input id="s_phone" class="inp" placeholder="'+tr('phone')+'"><input id="s_pass" type="password" class="inp" placeholder="'+tr('pass')+'"><button class="btn btn-green" style="width:100%" onclick="doSignup()">'+tr('create')+'</button>';
+  h+='<div style="color:white;font-weight:600;font-size:13px;margin-bottom:10px">'+tr('newAcc')+'</div><input id="s_shop" class="inp" placeholder="'+tr('shop')+'"><input id="s_email" class="inp" placeholder="'+tr('email')+'"><input id="s_phone" class="inp" placeholder="'+tr('phone')+'"><input id="s_pass" type="password" class="inp" placeholder="'+tr('pass')+'"><button class="btn btn-green" style="width:100%;padding:12px" onclick="doSignup()">'+tr('create')+'</button>';
  }
  h+='</div></div>';
  document.getElementById('app').innerHTML=h;
 }
-function doLogin(){ var s=document.getElementById('shop').value; var p=document.getElementById('pass').value; if(s===""||p===""){alert("Enter shop and password");return;} shopName=s; logged=true; showList(); }
-function doSignup(){ var s=document.getElementById('s_shop').value; var pw=document.getElementById('s_pass').value; if(s===""||pw===""){alert("Enter shop and password");return;} shopName=s; logged=true; showList(); }
-function doLogout(){ logged=false; showLock(); }
-function getFiltered(){
- var now=new Date(); var out=[];
- for(var i=0;i<customers.length;i++){
-  var c=customers[i]; var d=new Date(c.date); var ok=true;
-  if(filter==="This Month"){ ok=(d.getMonth()===now.getMonth()&&d.getFullYear()===now.getFullYear()); }
-  if(filter==="This Quarter"){ var q=Math.floor(now.getMonth()/3); var oq=Math.floor(d.getMonth()/3); ok=(oq===q&&d.getFullYear()===now.getFullYear()); }
-  if(filter==="This Year"){ ok=(d.getFullYear()===now.getFullYear()); }
+
+function doLogin(){
+ var s=document.getElementById('shop').value.trim();
+ var p=document.getElementById('pass').value.trim();
+ if(!s||!p){ alert("Enter shop name and password"); return; }
+ shopName=s; logged=true; showList();
+}
+function doSignup(){
+ var s=document.getElementById('s_shop').value.trim();
+ var pw=document.getElementById('s_pass').value.trim();
+ if(!s||!pw){ alert("Fill all required fields"); return; }
+ shopName=s; logged=true; showList();
+}
+function doLogout(){ logged=false; current=null; showLock(); }
+
+function filterList(arr, isBulk){
+ var now = new Date();
+ var out = [];
+ for(var i=0; i<arr.length; i++){
+  var item = arr[i];
+  var d = new Date(item.date);
+  var ok = true;
+  if(filter==="This Month"){ ok = (d.getMonth()===now.getMonth() && d.getFullYear()===now.getFullYear()); }
+  if(filter==="This Quarter"){
+    var q = Math.floor(now.getMonth()/3);
+    var oq = Math.floor(d.getMonth()/3);
+    ok = (oq===q && d.getFullYear()===now.getFullYear());
+  }
+  if(filter==="This Year"){ ok = (d.getFullYear()===now.getFullYear()); }
   if(!ok) continue;
-  if(search!==""&&c.name.toLowerCase().indexOf(search.toLowerCase())==-1&&c.type.toLowerCase().indexOf(search.toLowerCase())==-1) continue;
-  out.push(c);
+  if(search!==""){
+    var s = search.toLowerCase();
+    var nameToMatch = (isBulk ? item.school : item.name) || "";
+    var typeToMatch = item.type || "";
+    var phoneToMatch = (isBulk ? item.contact : item.phone) || "";
+    if(nameToMatch.toLowerCase().indexOf(s)===-1 && typeToMatch.toLowerCase().indexOf(s)===-1 && phoneToMatch.indexOf(s)===-1){
+      continue;
+    }
+  }
+  out.push(item);
  }
  return out;
 }
+
 function showList(){
  if(!logged){ showLock(); return; }
- var list=getFiltered(); var t1=0; var r1=0; var o1=0; var p1=0;
- for(var i=0;i<list.length;i++){ t1+=list[i].total; r1+=list[i].paid; o1+=(list[i].total-list[i].paid); p1+=list[i].profit; }
- var bulkTotal=0; var bulkRec=0; for(var b=0;b<bulkJobs.length;b++){ bulkTotal+=bulkJobs[b].total; bulkRec+=bulkJobs[b].paid; }
- t1+=bulkTotal; r1+=bulkRec; o1+=(bulkTotal-bulkRec);
-  var bulkProfitFix=0; var sellProfitFix=0; var sellTotalFix=0;
- for(var _bb=0;_bb<bulkJobs.length;_bb++){ var _bc=bulkJobs[_bb].costTotal|| (bulkJobs[_bb].costPer*bulkJobs[_bb].qty)||0; bulkProfitFix+=(bulkJobs[_bb].total - _bc); }
- for(var _ss=0;_ss<sellItems.length;_ss++){ sellProfitFix+=sellItems[_ss].profit; sellTotalFix+=sellItems[_ss].price; }
- p1 = p1 + bulkProfitFix + sellProfitFix;
- t1 = t1 + sellTotalFix;
- r1 = r1 + sellTotalFix;
-  var h='<div style="max-width:480px;margin:0 auto"><div class="top"><div style="display:flex;gap:8px;align-items:center"><div class="logo">✂️</div><div><b style="font-size:13px">Tailor Keeper</b><div class="small">'+shopName+' - Full</div></div></div><div style="display:flex;gap:6px;align-items:center"><button class="lang-btn" onclick="toggleLang()">'+(lang==='en'?'HA':'EN')+'</button><button onclick="doLogout()" style="font-size:11px;border:1px solid #ddd;padding:6px 10px;border-radius:20px;background:white">'+tr('logout')+'</button></div></div>';
- h+='<div style="padding:12px"><div style="display:flex;gap:6px;overflow:auto;padding-bottom:6px"><button class="filter '+(filter==='All Time'?'active':'')+'" onclick="filter=\'All Time\';showList()">'+tr('allTime')+'</button><button class="filter '+(filter==='This Month'?'active':'')+'" onclick="filter=\'This Month\';showList()">'+tr('thisMonth')+'</button><button class="filter '+(filter==='This Quarter'?'active':'')+'" onclick="filter=\'This Quarter\';showList()">'+tr('quarter')+'</button><button class="filter '+(filter==='This Year'?'active':'')+'" onclick="filter=\'This Year\';showList()">'+tr('year')+'</button></div>';
- h+='<div class="small" style="margin:6px 0 10px">'+tr('showing')+': '+filter+' ('+list.length+')</div>';
- h+='<div class="grid4" style="margin-bottom:12px"><div class="card"><div class="small">'+tr('totalSales')+'</div><b>₦'+t1+'</b></div><div class="card"><div class="small">'+tr('received')+'</div><b>₦'+r1+'</b></div><div class="card"><div class="small">'+tr('outstanding')+'</div><b>₦'+o1+'</b></div><div class="card"><div class="small">'+tr('profit')+'</div><b style="color:#16a34a">₦'+p1+'</b></div></div>';
- h+='<div style="position:relative;margin-bottom:12px"><input id="search" value="'+search+'" oninput="search=this.value;showList()" placeholder="'+tr('search')+'" style="width:100%;box-sizing:border-box;padding:11px 11px 11px 36px;background:white;border-radius:12px;border:1px solid #eee"><span style="position:absolute;left:12px;top:11px">🔍</span></div>';
- h+='<div style="display:flex;background:white;border-radius:20px;padding:4px;border:1px solid #eee;margin-bottom:12px"><button class="tab '+(tab==='Customers'?'active':'')+'" onclick="tab=\'Customers\';showList()">'+tr('customers')+'</button><button class="tab '+(tab==='Bulk'?'active':'')+'" onclick="tab=\'Bulk\';showList()">'+tr('bulk')+'</button><button class="tab '+(tab==='Report'?'active':'')+'" onclick="tab=\'Report\';showList()">'+tr('report')+'</button><button class="tab '+(tab==='Sell'?'active':'')+'" onclick="tab=\'Sell\';showList()">'+tr('sell')+'</button></div>';
+ var cList = filterList(customers, false);
+ var bList = filterList(bulkOrders, true);
+
+ var t1=0, r1=0, o1=0, p1=0, c1=0;
+ for(var i=0; i<cList.length; i++){
+  t1 += cList[i].total;
+  r1 += cList[i].paid;
+  o1 += (cList[i].total - cList[i].paid);
+  p1 += cList[i].profit;
+  c1 += (cList[i].cost || 0);
+ }
+ for(var j=0; j<bList.length; j++){
+  t1 += bList[j].total;
+  r1 += bList[j].paid;
+  o1 += (bList[j].total - bList[j].paid);
+  p1 += bList[j].profit;
+  c1 += (bList[j].cost || 0);
+ }
+
+ var h='<div style="max-width:480px;margin:0 auto;padding-bottom:30px">';
+ h+='<div class="top"><div style="display:flex;gap:10px;align-items:center"><div class="logo">✂️</div><div><b style="font-size:14px;color:#0f172a">'+shopName+'</b><div class="small">Tailor Hub & Bulk Manager</div></div></div><div style="display:flex;gap:6px;align-items:center"><button class="lang-btn" onclick="toggleLang()">'+(lang==='en'?'HA':'EN')+'</button><button onclick="doLogout()" class="lang-btn" style="color:#ef4444">'+tr('logout')+'</button></div></div>';
+ 
+ h+='<div style="padding:12px">';
+ h+='<div style="display:flex;gap:6px;overflow-x:auto;padding-bottom:6px"><button class="filter '+(filter==='All Time'?'active':'')+'" onclick="filter=\'All Time\';showList()">'+tr('allTime')+'</button><button class="filter '+(filter==='This Month'?'active':'')+'" onclick="filter=\'This Month\';showList()">'+tr('thisMonth')+'</button><button class="filter '+(filter==='This Quarter'?'active':'')+'" onclick="filter=\'This Quarter\';showList()">'+tr('quarter')+'</button><button class="filter '+(filter==='This Year'?'active':'')+'" onclick="filter=\'This Year\';showList()">'+tr('year')+'</button></div>';
+ 
+ h+='<div class="grid4" style="margin:10px 0 12px">';
+ h+='<div class="card"><div class="small">'+tr('totalSales')+'</div><b style="font-size:14px">₦'+t1.toLocaleString()+'</b><div style="font-size:9px;color:#64748b;margin-top:2px">'+(cList.length+bList.length)+' Total Jobs</div></div>';
+ h+='<div class="card"><div class="small">'+tr('received')+'</div><b style="font-size:14px;color:#16a34a">₦'+r1.toLocaleString()+'</b></div>';
+ h+='<div class="card"><div class="small">'+tr('outstanding')+'</div><b style="font-size:14px;color:#f97316">₦'+o1.toLocaleString()+'</b></div>';
+ h+='<div class="card"><div class="small">'+tr('profit')+'</div><b style="font-size:14px;color:#0284c7">₦'+p1.toLocaleString()+'</b><div style="font-size:9px;color:#64748b;margin-top:2px">Exp: ₦'+c1.toLocaleString()+'</div></div>';
+ h+='</div>';
+
+ h+='<div style="position:relative;margin-bottom:12px"><input id="search" value="'+search+'" oninput="search=this.value;showList()" placeholder="'+tr('search')+'" style="width:100%;box-sizing:border-box;padding:10px 10px 10px 34px;background:white;border-radius:12px;border:1px solid #e2e8f0;font-size:13px"><span style="position:absolute;left:10px;top:9px;font-size:13px">🔍</span></div>';
+
+ h+='<div style="display:flex;background:#e2e8f0;border-radius:24px;padding:3px;margin-bottom:14px">';
+ h+='<button class="tab '+(tab==='Customers'?'active':'')+'" onclick="tab=\'Customers\';showList()">'+tr('customers')+' ('+cList.length+')</button>';
+ h+='<button class="tab '+(tab==='Bulk'?'active':'')+'" onclick="tab=\'Bulk\';showList()">'+tr('bulk')+' ('+bList.length+')</button>';
+ h+='<button class="tab '+(tab==='Report'?'active':'')+'" onclick="tab=\'Report\';showList()">'+tr('report')+'</button>';
+ h+='<button class="tab '+(tab==='Sell'?'active':'')+'" onclick="tab=\'Sell\';showList()">'+tr('sell')+'</button>';
+ h+='</div>';
+
  if(tab==='Customers'){
-  h+='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><b style="font-size:13px">'+tr('custOrders')+'</b><button class="btn btn-green" onclick="openNewModal()">'+tr('newBtn')+'</button></div>';
-  for(var i=0;i<list.length;i++){
-   var c=list[i]; var perc=Math.round((c.paid/c.total)*100); if(isNaN(perc)) perc=0;
-   h+='<div class="card"><div style="display:flex;justify-content:space-between"><div><b style="font-size:13px">'+c.name+'</b><div class="small">'+c.type+' · Total ₦'+c.total+' · Paid ₦'+c.paid+' · '+tr('custom')+':'+c.custom.length+'</div></div><button onclick="deleteCustomer('+c.id+')" style="color:red;border:none;background:none;font-size:11px">Del</button></div><div class="progress"><div class="progress-bar" style="width:'+perc+'%"></div></div><div style="display:flex;justify-content:space-between;margin-top:4px" class="small"><span style="color:green">'+perc+'% '+tr('paidPct')+'</span><span style="color:orange;font-weight:bold">₦'+(c.total-c.paid)+' '+tr('paidLeft')+'</span></div><div style="display:flex;gap:6px;margin-top:8px"><button class="btn" style="flex:1;background:#e8f5e9;color:#16a34a;border:1px solid #16a34a" onclick="openPayModal('+c.id+')">'+tr('pay')+'</button><button class="btn btn-dark" style="flex:2" onclick="openCustomer('+c.id+')">'+tr('measure')+'</button></div></div>';
+  h+='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><b style="font-size:13px">'+tr('custOrders')+'</b><button class="btn btn-green" onclick="openNewModal()">'+tr('newBtn')+'</button></div>';
+  if(cList.length===0){
+    h+='<div class="card" style="text-align:center;color:#64748b;padding:30px">No customer orders found.</div>';
   }
- } else if(tab==='Bulk'){
-  h+='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><b style="font-size:13px">'+tr('bulkTitle')+' (Sewing Many)</b><button class="btn btn-green" onclick="openBulkModal()">+ New Bulk</button></div>';
-  if(bulkJobs.length===0){ h+='<div class="card" style="text-align:center;padding:24px"><div style="font-size:30px">👕</div><b>Bulk Sewing Jobs</b><div class="small">For uniforms, Aso-Ebi, 20+ pieces</div><div class="small" style="margin-top:8px">Tap + New Bulk to add e.g.<br>Grace School - 30 uniforms × ₦5000</div></div>'; }
-  for(var bi=0;bi<bulkJobs.length;bi++){
-   var bj=bulkJobs[bi]; var bp=Math.round((bj.paid/bj.total)*100)||0; var bal=bj.total-bj.paid;
-   h+='<div class="card"><div style="display:flex;justify-content:space-between"><div><b style="font-size:13px">'+bj.client+'</b><div class="small">'+bj.qty+' pcs • '+bj.style+' • '+bj.prog+'</div><div class="small">Total ₦'+bj.total+' ('+bj.qty+' × ₦'+bj.pricePer+') • Paid ₦'+bj.paid+' • Bal ₦'+bal+'</div><div class="small">'+(bj.date?'Due: '+bj.date:'')+' '+(bj.note||'')+'</div></div><button onclick="deleteBulk('+bj.id+')" style="color:red;border:none;background:none;font-size:11px">Del</button></div><div class="progress"><div class="progress-bar" style="width:'+bp+'%"></div></div><div class="small" style="display:flex;justify-content:space-between;margin-top:4px"><span style="color:green">'+bp+'% paid</span><span style="color:orange;font-weight:bold">₦'+bal+' left</span></div><div style="display:flex;gap:6px;margin-top:8px"><button class="btn" style="flex:1;background:#e8f5e9;color:#16a34a;border:1px solid #16a34a" onclick="openBulkPayModal('+bj.id+')">💰 Payment</button><button class="btn btn-dark" style="flex:1" onclick="openBulkModal('+bj.id+')">✏️ Edit</button></div></div>';
+  for(var i=0; i<cList.length; i++){
+   var c = cList[i];
+   var rem = c.total - c.paid;
+   var perc = c.total > 0 ? Math.min(100, Math.round((c.paid / c.total) * 100)) : 100;
+   h+='<div class="card">';
+   h+='<div style="display:flex;justify-content:space-between;align-items:flex-start"><div><b style="font-size:14px;color:#0f172a">'+c.name+'</b> <span class="badge" style="background:#e0f2fe;color:#0369a1">'+c.type+'</span><div class="small" style="margin-top:4px">📅 '+c.date+' · 📞 '+(c.phone||'N/A')+'</div></div><button onclick="deleteCustomer('+c.id+')" style="color:#ef4444;border:none;background:none;font-size:12px;cursor:pointer">✕</button></div>';
+   
+   h+='<div style="background:#f8fafc;border-radius:10px;padding:8px;margin:8px 0;font-size:11px;display:flex;justify-content:space-between">';
+   h+='<div>Total: <b>₦'+c.total.toLocaleString()+'</b></div>';
+   h+='<div>Expense: <b style="color:#64748b">₦'+(c.cost||0).toLocaleString()+'</b></div>';
+   h+='<div>Profit: <b style="color:#0284c7">₦'+c.profit.toLocaleString()+'</b></div>';
+   h+='</div>';
+
+   h+='<div class="progress"><div class="progress-bar" style="width:'+perc+'%"></div></div>';
+   h+='<div style="display:flex;justify-content:space-between;margin-top:4px" class="small"><span style="color:#16a34a;font-weight:600">₦'+c.paid.toLocaleString()+' ('+perc+'% '+tr('paidPct')+')</span><span style="color:#f97316;font-weight:600">₦'+rem.toLocaleString()+' '+tr('paidLeft')+'</span></div>';
+   h+='<div style="display:flex;gap:6px;margin-top:10px"><button class="btn" style="flex:1;background:#ecfdf5;color:#16a34a;border:1px solid #10b981" onclick="openPayModal('+c.id+', false)">'+tr('pay')+'</button><button class="btn btn-dark" style="flex:1.4" onclick="openCustomer('+c.id+')">'+tr('measure')+'</button></div>';
+   h+='</div>';
   }
- } else if(tab==='Report'){
-  var monthly={}; for(var ci=0;ci<customers.length;ci++){ var cd=new Date(customers[ci].date); var k=cd.getFullYear()+'-'+(cd.getMonth()+1); monthly[k]=(monthly[k]||0)+customers[ci].paid; } for(var bj2=0;bj2<bulkJobs.length;bj2++){ var bd=new Date(bulkJobs[bj2].created); var k2=bd.getFullYear()+'-'+(bd.getMonth()+1); monthly[k2]=(monthly[k2]||0)+bulkJobs[bj2].paid; }
-  var mkeys=Object.keys(monthly).sort().slice(-6);
-  h+='<div class="card"><b>📊 Monthly Income</b><div class="small">Customers + Bulk Sewing combined</div><div style="margin-top:10px">';
-  for(var mk=0;mk<mkeys.length;mk++){ h+='<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #eee"><span class="small">'+mkeys[mk]+'</span><b>₦'+monthly[mkeys[mk]]+'</b></div>'; }
-  if(mkeys.length===0) h+='<div class="small">No data yet</div>';
-  h+='</div><div style="display:flex;gap:8px;margin-top:12px"><button class="btn btn-dark" style="flex:1;padding:12px" onclick="exportCSV()">📄 Export CSV</button><button class="btn" style="flex:1;padding:12px;background:#eee" onclick="window.print()">🖨️ Print</button></div></div>';
-  h+='<div class="card" style="margin-top:12px"><b>Top Customers</b>';
-  var sorted=customers.slice().sort(function(a,b){return b.paid-a.paid;}).slice(0,5);
-  for(var si=0;si<sorted.length;si++){ h+='<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f5f5f5"><span>'+sorted[si].name+'</span><b>₦'+sorted[si].paid+'</b></div>'; }
-  h+='</div>';
- } else if(tab==='Sell'){
-  h+='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><b style="font-size:13px">'+tr('sellTitle')+'</b><button class="btn btn-green" onclick="openSellModal()">+ New Sale</button></div>';
-  h+='<div class="card"><div class="grid2"><input id="sellItem" class="inp-light" placeholder="Item e.g. Fabric"><input id="sellPrice" type="number" class="inp-light" placeholder="Price ₦"><input id="sellCost" type="number" class="inp-light" placeholder="Cost ₦"><button class="btn btn-green" onclick="quickSell()">+ Add</button></div></div>';
-  if(sellItems.length===0){ h+='<div class="card" style="text-align:center;padding:20px;color:#888">No sales yet - sell fabric, ready wear</div>'; }
-  for(var si2=0;si2<sellItems.length;si2++){ var s=sellItems[si2]; h+='<div class="card"><div style="display:flex;justify-content:space-between"><div><b>'+s.item+'</b><div class="small">'+new Date(s.created).toLocaleDateString()+' • Cost ₦'+s.cost+' • Price ₦'+s.price+' • Profit ₦'+s.profit+'</div></div><b style="color:#16a34a">+₦'+s.profit+'</b></div><button class="btn" style="margin-top:8px;background:#fee2e2;color:#b91c1c" onclick="deleteSell('+s.id+')">🗑️ Delete</button></div>'; }
+ }
+ else if(tab==='Bulk'){
+  h+='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><b style="font-size:13px">'+tr('bulkOrders')+'</b><button class="btn btn-green" onclick="openNewBulkModal()">'+tr('newBulkBtn')+'</button></div>';
+  if(bList.length===0){
+    h+='<div class="card" style="text-align:center;color:#64748b;padding:30px">No school/bulk orders found. Tap "+ New Bulk Contract" to add.</div>';
+  }
+  for(var j=0; j<bList.length; j++){
+   var b = bList[j];
+   var bRem = b.total - b.paid;
+   var bPerc = b.total > 0 ? Math.min(100, Math.round((b.paid / b.total) * 100)) : 100;
+   var prodPerc = b.qty > 0 ? Math.min(100, Math.round((b.completedQty / b.qty) * 100)) : 0;
+
+   h+='<div class="card" style="border-left:4px solid #16a34a">';
+   h+='<div style="display:flex;justify-content:space-between;align-items:flex-start"><div><b style="font-size:14px;color:#0f172a">🏫 '+b.school+'</b> <span class="badge" style="background:#fef3c7;color:#b45309">'+b.qty+' Pieces</span><div class="small" style="margin-top:3px"><b>'+b.type+'</b> · 📞 '+(b.contact||'N/A')+'</div><div class="small" style="color:#64748b">Due: <b style="color:#b45309">'+b.deadline+'</b></div></div><button onclick="deleteBulkOrder('+b.id+')" style="color:#ef4444;border:none;background:none;font-size:12px;cursor:pointer">✕</button></div>';
+
+   h+='<div style="margin-top:8px"><div style="display:flex;justify-content:space-between" class="small"><span style="font-weight:600">Production: '+b.completedQty+' of '+b.qty+' sewn</span><span style="font-weight:600;color:#2563eb">'+prod:'+(authTab==='signup'?'white':'transparent')+';color:'+(authTab==='signup'?'black':'#94a3b8')+'">'+tr('signup')+'</button></div>';
+ if(authTab==='login'){
+  h+='<div style="color:white;font-weight:600;font-size:13px;margin-bottom:10px">'+tr('welcome')+'</div><input id="shop" value="'+shopName+'" class="inp" placeholder="'+tr('shop')+'"><input id="pass" value="password" type="password" class="inp" placeholder="'+tr('pass')+'"><button class="btn btn-green" style="width:100%;padding:12px" onclick="doLogin()">'+tr('enter')+'</button>';
+ }else{
+  h+='<div style="color:white;font-weight:600;font-size:13px;margin-bottom:10px">'+tr('newAcc')+'</div><input id="s_shop" class="inp" placeholder="'+tr('shop')+'"><input id="s_email" class="inp" placeholder="'+tr('email')+'"><input id="s_phone" class="inp" placeholder="'+tr('phone')+'"><input id="s_pass" type="password" class="inp" placeholder="'+tr('pass')+'"><button class="btn btn-green" style="width:100%;padding:12px" onclick="doSignup()">'+tr('create')+'</button>';
  }
  h+='</div></div>';
  document.getElementById('app').innerHTML=h;
 }
-function toggleLang(){ lang=(lang==='en'?'ha':'en'); if(logged) showList(); else showLock(); }
-function openNewModal(){
- var h='<b>✂️ '+tr('newBtn')+' - '+tr('name')+'</b><div style="margin-top:10px"><input id="n_name" class="inp-light" placeholder="'+tr('name')+'"><input id="n_type" class="inp-light" placeholder="'+tr('type')+' e.g. 2 Kaftan"><div class="grid2"><input id="n_total" type="number" class="inp-light" placeholder="'+tr('total')+'"><input id="n_paid" type="number" class="inp-light" placeholder="'+tr('paid')+'"></div><input id="n_phone" class="inp-light" placeholder="'+tr('phone')+'"><input id="n_date" type="date" value="'+new Date().toISOString().slice(0,10)+'" class="inp-light"><button class="btn btn-green" style="width:100%;padding:14px" onclick="saveNewCustomer()">'+tr('createCust')+'</button><button class="btn" style="width:100%;margin-top:8px;background:#eee" onclick="closeModal()">'+tr('cancel')+'</button></div>';
- document.getElementById('modalBox').innerHTML=h; document.getElementById('modal').style.display='flex';
+
+function doLogin(){
+ var s=document.getElementById('shop').value.trim();
+ var p=document.getElementById('pass').value.trim();
+ if(!s||!p){ alert("Enter shop name and password"); return; }
+ shopName=s; logged=true; showList();
+}
+function doSignup(){
+ var s=document.getElementById('s_shop').value.trim();
+ var pw=document.getElementById('s_pass').value.trim();
+ if(!s||!pw){ alert("Fill all required fields"); return; }
+ shopName=s; logged=true; showList();
+}
+function doLogout(){ logged=false; current=null; showLock(); }
+
+function filterList(arr, isBulk){
+ var now = new Date();
+ var out = [];
+ for(var i=0; i<arr.length; i++){
+  var item = arr[i];
+  var d = new Date(item.date);
+  var ok = true;
+  if(filter==="This Month"){ ok = (d.getMonth()===now.getMonth() && d.getFullYear()===now.getFullYear()); }
+  if(filter==="This Quarter"){
+    var q = Math.floor(now.getMonth()/3);
+    var oq = Math.floor(d.getMonth()/3);
+    ok = (oq===q && d.getFullYear()===now.getFullYear());
+  }
+  if(filter==="This Year"){ ok = (d.getFullYear()===now.getFullYear()); }
+  if(!ok) continue;
+  if(search!==""){
+    var s = search.toLowerCase();
+    var nameToMatch = (isBulk ? item.school : item.name) || "";
+    var typeToMatch = item.type || "";
+    var phoneToMatch = (isBulk ? item.contact : item.phone) || "";
+    if(nameToMatch.toLowerCase().indexOf(s)===-1 && typeToMatch.toLowerCase().indexOf(s)===-1 && phoneToMatch.indexOf(s)===-1){
+      continue;
+    }
+  }
+  out.push(item);
+ }
+ return out;
+}
+
+function showList(){
+ if(!logged){ showLock(); return; }
+ var cList = filterList(customers, false);
+ var bList = filterList(bulkOrders, true);
+
+ var t1=0, r1=0, o1=0, p1=0, c1=0;
+ for(var i=0; i<cList.length; i++){
+  t1 += cList[i].total;
+  r1 += cList[i].paid;
+  o1 += (cList[i].total - cList[i].paid);
+  p1 += cList[i].profit;
+  c1 += (cList[i].cost || 0);
+ }
+ for(var j=0; j<bList.length; j++){
+  t1 += bList[j].total;
+  r1 += bList[j].paid;
+  o1 += (bList[j].total - bList[j].paid);
+  p1 += bList[j].profit;
+  c1 += (bList[j].cost || 0);
+ }
+
+ var h='<div style="max-width:480px;margin:0 auto;padding-bottom:30px">';
+ h+='<div class="top"><div style="display:flex;gap:10px;align-items:center"><div class="logo">✂️</div><div><b style="font-size:14px;color:#0f172a">'+shopName+'</b><div class="small">Tailor Hub & Bulk Manager</div></div></div><div style="display:flex;gap:6px;align-items:center"><button class="lang-btn" onclick="toggleLang()">'+(lang==='en'?'HA':'EN')+'</button><button onclick="doLogout()" class="lang-btn" style="color:#ef4444">'+tr('logout')+'</button></div></div>';
+ 
+ h+='<div style="padding:12px">';
+ h+='<div style="display:flex;gap:6px;overflow-x:auto;padding-bottom:6px"><button class="filter '+(filter==='All Time'?'active':'')+'" onclick="filter=\'All Time\';showList()">'+tr('allTime')+'</button><button class="filter '+(filter==='This Month'?'active':'')+'" onclick="filter=\'This Month\';showList()">'+tr('thisMonth')+'</button><button class="filter '+(filter==='This Quarter'?'active':'')+'" onclick="filter=\'This Quarter\';showList()">'+tr('quarter')+'</button><button class="filter '+(filter==='This Year'?'active':'')+'" onclick="filter=\'This Year\';showList()">'+tr('year')+'</button></div>';
+ 
+ h+='<div class="grid4" style="margin:10px 0 12px">';
+ h+='<div class="card"><div class="small">'+tr('totalSales')+'</div><b style="font-size:14px">₦'+t1.toLocaleString()+'</b><div style="font-size:9px;color:#64748b;margin-top:2px">'+(cList.length+bList.length)+' Total Jobs</div></div>';
+ h+='<div class="card"><div class="small">'+tr('received')+'</div><b style="font-size:14px;color:#16a34a">₦'+r1.toLocaleString()+'</b></div>';
+ h+='<div class="card"><div class="small">'+tr('outstanding')+'</div><b style="font-size:14px;color:#f97316">₦'+o1.toLocaleString()+'</b></div>';
+ h+='<div class="card"><div class="small">'+tr('profit')+'</div><b style="font-size:14px;color:#0284c7">₦'+p1.toLocaleString()+'</b><div style="font-size:9px;color:#64748b;margin-top:2px">Exp: ₦'+c1.toLocaleString()+'</div></div>';
+ h+='</div>';
+
+ h+='<div style="position:relative;margin-bottom:12px"><input id="search" value="'+search+'" oninput="search=this.value;showList()" placeholder="'+tr('search')+'" style="width:100%;box-sizing:border-box;padding:10px 10px 10px 34px;background:white;border-radius:12px;border:1px solid #e2e8f0;font-size:13px"><span style="position:absolute;left:10px;top:9px;font-size:13px">🔍</span></div>';
+
+ h+='<div style="display:flex;background:#e2e8f0;border-radius:24px;padding:3px;margin-bottom:14px">';
+ h+='<button class="tab '+(tab==='Customers'?'active':'')+'" onclick="tab=\'Customers\';showList()">'+tr('customers')+' ('+cList.length+')</button>';
+ h+='<button class="tab '+(tab==='Bulk'?'active':'')+'" onclick="tab=\'Bulk\';showList()">'+tr('bulk')+' ('+bList.length+')</button>';
+ h+='<button class="tab '+(tab==='Report'?'active':'')+'" onclick="tab=\'Report\';showList()">'+tr('report')+'</button>';
+ h+='<button class="tab '+(tab==='Sell'?'active':'')+'" onclick="tab=\'Sell\';showList()">'+tr('sell')+'</button>';
+ h+='</div>';
+
+ if(tab==='Customers'){
+  h+='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><b style="font-size:13px">'+tr('custOrders')+'</b><button class="btn btn-green" onclick="openNewModal()">'+tr('newBtn')+'</button></div>';
+  if(cList.length===0){
+    h+='<div class="card" style="text-align:center;color:#64748b;padding:30px">No customer orders found.</div>';
+  }
+  for(var i=0; i<cList.length; i++){
+   var c = cList[i];
+   var rem = c.total - c.paid;
+   var perc = c.total > 0 ? Math.min(100, Math.round((c.paid / c.total) * 100)) : 100;
+   h+='<div class="card">';
+   h+='<div style="display:flex;justify-content:space-between;align-items:flex-start"><div><b style="font-size:14px;color:#0f172a">'+c.name+'</b> <span class="badge" style="background:#e0f2fe;color:#0369a1">'+c.type+'</span><div class="small" style="margin-top:4px">📅 '+c.date+' · 📞 '+(c.phone||'N/A')+'</div></div><button onclick="deleteCustomer('+c.id+')" style="color:#ef4444;border:none;background:none;font-size:12px;cursor:pointer">✕</button></div>';
+   
+   h+='<div style="background:#f8fafc;border-radius:10px;padding:8px;margin:8px 0;font-size:11px;display:flex;justify-content:space-between">';
+   h+='<div>Total: <b>₦'+c.total.toLocaleString()+'</b></div>';
+   h+='<div>Expense: <b style="color:#64748b">₦'+(c.cost||0).toLocaleString()+'</b></div>';
+   h+='<div>Profit: <b style="color:#0284c7">₦'+c.profit.toLocaleString()+'</b></div>';
+   h+='</div>';
+
+   h+='<div class="progress"><div class="progress-bar" style="width:'+perc+'%"></div></div>';
+   h+='<div style="display:flex;justify-content:space-between;margin-top:4px" class="small"><span style="color:#16a34a;font-weight:600">₦'+c.paid.toLocaleString()+' ('+perc+'% '+tr('paidPct')+')</span><span style="color:#f97316;font-weight:600">₦'+rem.toLocaleString()+' '+tr('paidLeft')+'</span></div>';
+   h+='<div style="display:flex;gap:6px;margin-top:10px"><button class="btn" style="flex:1;background:#ecfdf5;color:#16a34a;border:1px solid #10b981" onclick="openPayModal('+c.id+', false)">'+tr('pay')+'</button><button class="btn btn-dark" style="flex:1.4" onclick="openCustomer('+c.id+')">'+tr('measure')+'</button></div>';
+   h+='</div>';
+  }
+ }
+ else if(tab==='Bulk'){
+  h+='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><b style="font-size:13px">'+tr('bulkOrders')+'</b><button class="btn btn-green" onclick="openNewBulkModal()">'+tr('newBulkBtn')+'</button></div>';
+  if(bList.length===0){
+    h+='<div class="card" style="text-align:center;color:#64748b;padding:30px">No school/bulk orders found. Tap "+ New Bulk Contract" to add.</div>';
+  }
+  for(var j=0; j<bList.length; j++){
+   var b = bList[j];
+   var bRem = b.total - b.paid;
+   var bPerc = b.total > 0 ? Math.min(100, Math.round((b.paid / b.total) * 100)) : 100;
+   var prodPerc = b.qty > 0 ? Math.min(100, Math.round((b.completedQty / b.qty) * 100)) : 0;
+
+   h+='<div class="card" style="border-left:4px solid #16a34a">';
+   h+='<div style="display:flex;justify-content:space-between;align-items:flex-start"><div><b style="font-size:14px;color:#0f172a">🏫 '+b.school+'</b> <span class="badge" style="background:#fef3c7;color:#b45309">'+b.qty+' Pieces</span><div class="small" style="margin-top:3px"><b>'+b.type+'</b> · 📞 '+(b.contact||'N/A')+'</div><div class="small" style="color:#64748b">Due: <b style="color:#b45309">'+b.deadline+'</b></div></div><button onclick="deleteBulkOrder('+b.id+')" style="color:#ef4444;border:none;background:none;font-size:12px;cursor:pointer">✕</button></div>';
+
+   h+='<div style="margin-top:8px"><div style="display:flex;justify-content:space-between" class="small"><span style="font-weight:600">Production: '+b.completedQty+' of '+b.qty+' sewn</span><span style="font-weight:600;color:#2563eb">'+pro<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tailor Keeper - Full System</title>
+<style>
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:#f5f5f7;color:#1e293b}
+.lock{background:#0f172a;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:24px 16px;box-sizing:border-box}
+.lock-box{background:#1e293b;border:1px solid #334155;border-radius:16px;padding:20px;width:100%;max-width:360px;margin-top:16px}
+.inp{width:100%;box-sizing:border-box;background:#0f172a;border:1px solid #334155;border-radius:12px;padding:12px;color:white;margin-bottom:10px;font-size:14px}
+.inp-light{width:100%;box-sizing:border-box;background:white;border:1px solid #cbd5e1;border-radius:10px;padding:10px;margin-bottom:10px;font-size:13px}
+.top{background:white;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:10;box-shadow:0 1px 3px rgba(0,0,0,0.05)}
+.logo{width:36px;height:36px;background:#16a34a;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px}
+.card{background:white;border-radius:14px;padding:14px;margin-bottom:10px;border:1px solid #e2e8f0;box-shadow:0 1px 2px rgba(0,0,0,0.02)}
+.m-card{background:#1e293b;border-radius:14px;padding:14px;margin-bottom:12px;color:white}
+.m-inp{background:#0f172a;border:1px solid #334155;border-radius:10px;padding:10px;color:white;width:100%;box-sizing:border-box}
+.btn{padding:10px 14px;border-radius:12px;border:none;font-weight:600;font-size:12px;cursor:pointer}
+.btn-green{background:#16a34a;color:white}
+.btn-dark{background:#1e293b;color:white}
+.small{font-size:11px;color:#64748b}
+.filter{padding:7px 14px;border-radius:20px;border:1px solid #cbd5e1;background:white;font-size:11px;white-space:nowrap;cursor:pointer}
+.filter.active{background:#2563eb;color:white;border-color:#2563eb}
+.tab{flex:1;padding:8px 0;border-radius:20px;border:none;font-size:12px;cursor:pointer;background:transparent;color:#64748b;font-weight:600}
+.tab.active{background:#0f172a;color:white}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.grid4{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.progress{height:7px;background:#f1f5f9;border-radius:10px;margin-top:6px;overflow:hidden}
+.progress-bar{height:100%;background:#16a34a;border-radius:10px}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:50;display:none;align-items:center;justify-content:center;padding:16px}
+.modal-box{background:white;border-radius:16px;padding:18px;width:100%;max-width:380px;max-height:90vh;overflow-y:auto;box-sizing:border-box}
+.lang-btn{padding:5px 10px;border-radius:15px;border:1px solid #cbd5e1;background:white;font-size:11px;font-weight:bold;cursor:pointer}
+.badge{display:inline-block;padding:3px 8px;border-radius:12px;font-size:10px;font-weight:bold}
+.table-ui{width:100%;border-collapse:collapse;font-size:12px;text-align:left;margin-top:8px}
+.table-ui th,.table-ui td{padding:8px 6px;border-bottom:1px solid #f1f5f9}
+</style>
+</head>
+<body>
+<div id="app">Loading...</div>
+<div id="modal" class="modal"><div id="modalBox" class="modal-box"></div></div>
+
+<script>
+var lang = "en";
+var t = {
+ en: {
+  login:"Login", signup:"Sign Up", shop:"Shop Name", pass:"Password", enter:"Enter →", create:"Create Account",
+  email:"Email", phone:"Phone", welcome:"Welcome back", newAcc:"Create account", totalSales:"Total Sales",
+  received:"Received", outstanding:"Outstanding", profit:"Real Profit", cost:"Total Expenses", search:"Search orders...",
+  customers:"Customers", bulk:"Bulk / School", report:"Report & Analytics", sell:"Quick Sell", custOrders:"Customer Orders",
+  bulkOrders:"School & Institutional Contracts", newBtn:"+ New Order", newBulkBtn:"+ New Bulk Contract",
+  pay:"💰 Payment", measure:"📏 Measurements", addPay:"Record Payment", amount:"Amount", confirm:"Save Payment",
+  cancel:"Cancel", name:"Customer / School Name", type:"Uniform / Garment Type", total:"Total ₦",
+  costLabel:"Material / Production Cost ₦", paid:"Deposit Paid ₦", createCust:"Save Customer →",
+  createBulk:"Confirm Bulk Contract →", allTime:"All Time", thisMonth:"This Month", quarter:"Quarter", year:"Year",
+  showing:"Showing", custom:"Custom", paidLeft:"left", paidPct:"paid", logout:"Logout", save:"Save Changes",
+  edit:"Edit Measurements", upper:"Upper Body", lower:"Lower Body", extra:"Extra / Neck",
+  customTitle:"Custom Fields", addCustom:"+ Add", addAny:"+ Add ANY Measurement", noCustom:"No custom fields recorded",
+  exportCsv:"Export Full Report", schoolName:"School / Organization Name", qty:"Quantity (Pairs/Pcs)", unitPrice:"Price Per Piece ₦",
+  unitCost:"Cost Per Piece ₦", deadline:"Delivery Deadline", completed:"Sewn / Delivered"
+ },
+ ha: {
+  login:"Shiga", signup:"Yi Rajista", shop:"Sunan Shago", pass:"Kalmar Sirri", enter:"Shiga →", create:"Kirkira Account",
+  email:"Imel", phone:"Waya", welcome:"Barka da dawowa", newAcc:"Kirkira sabon account", totalSales:"Jimillar Tallace",
+  received:"An Karba", outstanding:"Bashi", profit:"Riba", cost:"Kudin Kashewa", search:"Nemo...",
+  customers:"Abokan Ciniki", bulk:"Dinkin Gungu / Makarantu", report:"Rahoto", sell:"Sayarwa", custOrders:"Odin Mutum",
+  bulkOrders:"Kwantiragin Makarantu", newBtn:"+ Sabon Odi", newBulkBtn:"+ Sabon Dinkin Gungu", pay:"💰 Biya",
+  measure:"📏 Aunawa", addPay:"Kara Biya", amount:"Adadi", confirm:"Tabbatar Biya", cancel:"Soke",
+  name:"Sunan Aboki / Makarantar", type:"Nau'in Uniform", total:"Jimla ₦", costLabel:"Kudin Dinki/Kayan Aiki ₦",
+  paid:"An Biya ₦", createCust:"Ajiye Odi →", createBulk:"Tabbatar da Kwantiragi →", allTime:"Duk Lokaci",
+  thisMonth:"Wannan Wata", quarter:"Kwata", year:"Shekara", showing:"Ana nuna", custom:"Custom", paidLeft:"ragowa",
+  paidPct:"an biya", logout:"Fita", save:"Ajiye", edit:"Gyara", upper:"Jikin Sama", lower:"Jikin Kasa", extra:"Kari",
+  customTitle:"Aunawar Custom", addCustom:"+ Kara", addAny:"+ Kara kowace aunawa", noCustom:"Babu custom tukuna",
+  exportCsv:"Sauke Rahoto", schoolName:"Sunan Makaranta", qty:"Adadin Kaya (Pcs)", unitPrice:"Farashin Guda ₦",
+  unitCost:"Kudin Yadi/Guda ₦", deadline:"Ranar Bayarwa", completed:"Wanda aka dinka"
+ }
+};
+function tr(k){ return (t[lang] && t[lang][k]) || k; }
+
+ // FIXED: PERSISTENCE
+var defC=[
+ {id:1,name:"Abdul Sulaiman",type:"2 Kaftan",total:23000,cost:4500,profit:18500,paid:10000,date:"2026-10-26",phone:"0801234567",bust:"38",shoulder:"17",sleeve:"24",topLen:"34",waist:"32",hip:"36",trouser:"40",neck:"15",custom:[]},
+ {id:2,name:"Aisha Bello",type:"2 Bubu",total:25000,cost:10200,profit:14800,paid:25000,date:"2026-10-28",phone:"0804567890",bust:"40",shoulder:"16",sleeve:"23",topLen:"58",waist:"34",hip:"42",trouser:"0",neck:"15.5",custom:[{n:"Armhole",v:"19"}]},
+ {id:3,name:"Chinedu Okoro",type:"3 Agbada",total:45000,cost:15000,profit:30000,paid:20000,date:"2026-09-15",phone:"0807891234",bust:"42",shoulder:"19",sleeve:"26",topLen:"38",waist:"36",hip:"44",trouser:"42",neck:"16.5",custom:[]}
+];
+var defB=[
+ {id:101,school:"Prime Academy Minna",type:"Secondary School Uniforms",qty:120,completedQty:65,unitPrice:7500,unitCost:4200,total:900000,cost:504000,profit:396000,paid:600000,contact:"0803322110",date:"2026-10-10",deadline:"2026-11-15"},
+ {id:102,school:"Al-Huda Islamic Model",type:"Girls Hijab & Gown Sets",qty:50,completedQty:50,unitPrice:8000,unitCost:4500,total:400000,cost:225000,profit:175000,paid:400000,contact:"0805544332",date:"2026-10-20",deadline:"2026-10-30"}
+];
+var customers=null;try{customers=JSON.parse(localStorage.getItem('tk_full_c'));}catch(e){}customers=customers||defC;
+var bulkOrders=null;try{bulkOrders=JSON.parse(localStorage.getItem('tk_full_b'));}catch(e){}bulkOrders=bulkOrders||defB;
+function saveAll(){localStorage.setItem('tk_full_c',JSON.stringify(customers));localStorage.setItem('tk_full_b',JSON.stringify(bulkOrders));}
+
+var bulkOrders = [
+ {id:101, school:"Prime Academy Minna", type:"Secondary School Uniforms", qty:120, completedQty:65, unitPrice:7500, unitCost:4200, total:900000, cost:504000, profit:396000, paid:600000, contact:"0803322110", date:"2026-10-10", deadline:"2026-11-15", notes:"Green check shirts + green trousers"},
+ {id:102, school:"Al-Huda Islamic Model", type:"Girls Hijab & Gown Sets", qty:50, completedQty:50, unitPrice:8000, unitCost:4500, total:400000, cost:225000, profit:175000, paid:400000, contact:"0805544332", date:"2026-10-20", deadline:"2026-10-30", notes:"Navy blue gown with white embroidered hem"}
+];
+
+var current = null;
+var edit = false;
+var logged = false;
+var shopName = "Luky Tailors";
+var filter = "All Time";
+var tab = "Customers";
+var search = "";
+var authTab = "login";
+
+function showLock(){
+ var h='<div class="lock"><div style="display:flex;gap:8px;position:absolute;top:12px;right:12px"><button class="lang-btn" onclick="lang=\'en\';showLock()">EN</button><button class="lang-btn" onclick="lang=\'ha\';showLock()">HA</button></div>';
+ h+='<div style="width:64px;height:64px;background:#16a34a;border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:32px;margin-top:20px;box-shadow:0 6px 16px rgba(22,163,74,0.3)">✂️</div><div style="color:white;font-weight:bold;font-size:22px;margin-top:12px">Tailor Keeper</div><div style="color:#94a3b8;font-size:12px;margin-top:2px">Order, School Bulk, Expenses & POS</div>';
+ h+='<div class="lock-box"><div style="display:flex;background:#0f172a;border-radius:20px;padding:4px;margin-bottom:14px"><button onclick="authTab=\'login\';showLock()" style="flex:1;padding:8px;border-radius:20px;border:none;font-weight:bold;font-size:12px;cursor:pointer;background:'+(authTab==='login'?'white':'transparent')+';color:'+(authTab==='login'?'black':'#94a3b8')+'">'+tr('login')+'</button><button onclick="authTab=\'signup\';showLock()" style="flex:1;padding:8px;border-radius:20px;border:none;font-weight:bold;font-size:12px;cursor:pointer;background:'+(authTab==='signup'?'white':'transparent')+';color:'+(authTab==='signup'?'black':'#94a3b8')+'">'+tr('signup')+'</button></div>';
+ if(authTab==='login'){
+  h+='<div style="color:white;font-weight:600;font-size:13px;margin-bottom:10px">'+tr('welcome')+'</div><input id="shop" value="'+shopName+'" class="inp" placeholder="'+tr('shop')+'"><input id="pass" value="password" type="password" class="inp" placeholder="'+tr('pass')+'"><button class="btn btn-green" style="width:100%;padding:12px" onclick="doLogin()">'+tr('enter')+'</button>';
+ }else{
+  h+='<div style="color:white;font-weight:600;font-size:13px;margin-bottom:10px">'+tr('newAcc')+'</div><input id="s_shop" class="inp" placeholder="'+tr('shop')+'"><input id="s_email" class="inp" placeholder="'+tr('email')+'"><input id="s_phone" class="inp" placeholder="'+tr('phone')+'"><input id="s_pass" type="password" class="inp" placeholder="'+tr('pass')+'"><button class="btn btn-green" style="width:100%;padding:12px" onclick="doSignup()">'+tr('create')+'</button>';
+ }
+ h+='</div></div>';
+ document.getElementById('app').innerHTML=h;
+}
+
+function doLogin(){
+ var s=document.getElementById('shop').value.trim();
+ var p=document.getElementById('pass').value.trim();
+ if(!s||!p){ alert("Enter shop name and password"); return; }
+ shopName=s; logged=true; showList();
+}
+function doSignup(){
+ var s=document.getElementById('s_shop').value.trim();
+ var pw=document.getElementById('s_pass').value.trim();
+ if(!s||!pw){ alert("Fill all required fields"); return; }
+ shopName=s; logged=true; showList();
+}
+function doLogout(){ logged=false; current=null; showLock(); }
+
+function filterList(arr, isBulk){
+ var now = new Date();
+ var out = [];
+ for(var i=0; i<arr.length; i++){
+  var item = arr[i];
+  var d = new Date(item.date);
+  var ok = true;
+  if(filter==="This Month"){ ok = (d.getMonth()===now.getMonth() && d.getFullYear()===now.getFullYear()); }
+  if(filter==="This Quarter"){
+    var q = Math.floor(now.getMonth()/3);
+    var oq = Math.floor(d.getMonth()/3);
+    ok = (oq===q && d.getFullYear()===now.getFullYear());
+  }
+  if(filter==="This Year"){ ok = (d.getFullYear()===now.getFullYear()); }
+  if(!ok) continue;
+  if(search!==""){
+    var s = search.toLowerCase();
+    var nameToMatch = (isBulk ? item.school : item.name) || "";
+    var typeToMatch = item.type || "";
+    var phoneToMatch = (isBulk ? item.contact : item.phone) || "";
+    if(nameToMatch.toLowerCase().indexOf(s)===-1 && typeToMatch.toLowerCase().indexOf(s)===-1 && phoneToMatch.indexOf(s)===-1){
+      continue;
+    }
+  }
+  out.push(item);
+ }
+ return out;
+}
+
+function showList(){
+ if(!logged){ showLock(); return; }
+ var cList = filterList(customers, false);
+ var bList = filterList(bulkOrders, true);
+
+ var t1=0, r1=0, o1=0, p1=0, c1=0;
+ for(var i=0; i<cList.length; i++){
+  t1 += cList[i].total;
+  r1 += cList[i].paid;
+  o1 += (cList[i].total - cList[i].paid);
+  p1 += cList[i].profit;
+  c1 += (cList[i].cost || 0);
+ }
+ for(var j=0; j<bList.length; j++){
+  t1 += bList[j].total;
+  r1 += bList[j].paid;
+  o1 += (bList[j].total - bList[j].paid);
+  p1 += bList[j].profit;
+  c1 += (bList[j].cost || 0);
+ }
+
+ var h='<div style="max-width:480px;margin:0 auto;padding-bottom:30px">';
+ h+='<div class="top"><div style="display:flex;gap:10px;align-items:center"><div class="logo">✂️</div><div><b style="font-size:14px;color:#0f172a">'+shopName+'</b><div class="small">Tailor Hub & Bulk Manager</div></div></div><div style="display:flex;gap:6px;align-items:center"><button class="lang-btn" onclick="toggleLang()">'+(lang==='en'?'HA':'EN')+'</button><button onclick="doLogout()" class="lang-btn" style="color:#ef4444">'+tr('logout')+'</button></div></div>';
+ 
+ h+='<div style="padding:12px">';
+ h+='<div style="display:flex;gap:6px;overflow-x:auto;padding-bottom:6px"><button class="filter '+(filter==='All Time'?'active':'')+'" onclick="filter=\'All Time\';showList()">'+tr('allTime')+'</button><button class="filter '+(filter==='This Month'?'active':'')+'" onclick="filter=\'This Month\';showList()">'+tr('thisMonth')+'</button><button class="filter '+(filter==='This Quarter'?'active':'')+'" onclick="filter=\'This Quarter\';showList()">'+tr('quarter')+'</button><button class="filter '+(filter==='This Year'?'active':'')+'" onclick="filter=\'This Year\';showList()">'+tr('year')+'</button></div>';
+ 
+ h+='<div class="grid4" style="margin:10px 0 12px">';
+ h+='<div class="card"><div class="small">'+tr('totalSales')+'</div><b style="font-size:14px">₦'+t1.toLocaleString()+'</b><div style="font-size:9px;color:#64748b;margin-top:2px">'+(cList.length+bList.length)+' Total Jobs</div></div>';
+ h+='<div class="card"><div class="small">'+tr('received')+'</div><b style="font-size:14px;color:#16a34a">₦'+r1.toLocaleString()+'</b></div>';
+ h+='<div class="card"><div class="small">'+tr('outstanding')+'</div><b style="font-size:14px;color:#f97316">₦'+o1.toLocaleString()+'</b></div>';
+ h+='<div class="card"><div class="small">'+tr('profit')+'</div><b style="font-size:14px;color:#0284c7">₦'+p1.toLocaleString()+'</b><div style="font-size:9px;color:#64748b;margin-top:2px">Exp: ₦'+c1.toLocaleString()+'</div></div>';
+ h+='</div>';
+
+ h+='<div style="position:relative;margin-bottom:12px"><input id="search" value="'+search+'" oninput="search=this.value;showList()" placeholder="'+tr('search')+'" style="width:100%;box-sizing:border-box;padding:10px 10px 10px 34px;background:white;border-radius:12px;border:1px solid #e2e8f0;font-size:13px"><span style="position:absolute;left:10px;top:9px;font-size:13px">🔍</span></div>';
+
+ h+='<div style="display:flex;background:#e2e8f0;border-radius:24px;padding:3px;margin-bottom:14px">';
+ h+='<button class="tab '+(tab==='Customers'?'active':'')+'" onclick="tab=\'Customers\';showList()">'+tr('customers')+' ('+cList.length+')</button>';
+ h+='<button class="tab '+(tab==='Bulk'?'active':'')+'" onclick="tab=\'Bulk\';showList()">'+tr('bulk')+' ('+bList.length+')</button>';
+ h+='<button class="tab '+(tab==='Report'?'active':'')+'" onclick="tab=\'Report\';showList()">'+tr('report')+'</button>';
+ h+='<button class="tab '+(tab==='Sell'?'active':'')+'" onclick="tab=\'Sell\';showList()">'+tr('sell')+'</button>';
+ h+='</div>';
+
+ if(tab==='Customers'){
+  h+='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><b style="font-size:13px">'+tr('custOrders')+'</b><button class="btn btn-green" onclick="openNewModal()">'+tr('newBtn')+'</button></div>';
+  if(cList.length===0){
+    h+='<div class="card" style="text-align:center;color:#64748b;padding:30px">No customer orders found.</div>';
+  }
+  for(var i=0; i<cList.length; i++){
+   var c = cList[i];
+   var rem = c.total - c.paid;
+   var perc = c.total > 0 ? Math.min(100, Math.round((c.paid / c.total) * 100)) : 100;
+   h+='<div class="card">';
+   h+='<div style="display:flex;justify-content:space-between;align-items:flex-start"><div><b style="font-size:14px;color:#0f172a">'+c.name+'</b> <span class="badge" style="background:#e0f2fe;color:#0369a1">'+c.type+'</span><div class="small" style="margin-top:4px">📅 '+c.date+' · 📞 '+(c.phone||'N/A')+'</div></div><button onclick="deleteCustomer('+c.id+')" style="color:#ef4444;border:none;background:none;font-size:12px;cursor:pointer">✕</button></div>';
+   
+   h+='<div style="background:#f8fafc;border-radius:10px;padding:8px;margin:8px 0;font-size:11px;display:flex;justify-content:space-between">';
+   h+='<div>Total: <b>₦'+c.total.toLocaleString()+'</b></div>';
+   h+='<div>Expense: <b style="color:#64748b">₦'+(c.cost||0).toLocaleString()+'</b></div>';
+   h+='<div>Profit: <b style="color:#0284c7">₦'+c.profit.toLocaleString()+'</b></div>';
+   h+='</div>';
+
+   h+='<div class="progress"><div class="progress-bar" style="width:'+perc+'%"></div></div>';
+   h+='<div style="display:flex;justify-content:space-between;margin-top:4px" class="small"><span style="color:#16a34a;font-weight:600">₦'+c.paid.toLocaleString()+' ('+perc+'% '+tr('paidPct')+')</span><span style="color:#f97316;font-weight:600">₦'+rem.toLocaleString()+' '+tr('paidLeft')+'</span></div>';
+   h+='<div style="display:flex;gap:6px;margin-top:10px"><button class="btn" style="flex:1;background:#ecfdf5;color:#16a34a;border:1px solid #10b981" onclick="openPayModal('+c.id+', false)">'+tr('pay')+'</button><button class="btn btn-dark" style="flex:1.4" onclick="openCustomer('+c.id+')">'+tr('measure')+'</button></div>';
+   h+='</div>';
+  }
+ }
+ else if(tab==='Bulk'){
+  h+='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><b style="font-size:13px">'+tr('bulkOrders')+'</b><button class="btn btn-green" onclick="openNewBulkModal()">'+tr('newBulkBtn')+'</button></div>';
+  if(bList.length===0){
+    h+='<div class="card" style="text-align:center;color:#64748b;padding:30px">No school/bulk orders found. Tap "+ New Bulk Contract" to add.</div>';
+  }
+  for(var j=0; j<bList.length; j++){
+   var b = bList[j];
+   var bRem = b.total - b.paid;
+   var bPerc = b.total > 0 ? Math.min(100, Math.round((b.paid / b.total) * 100)) : 100;
+   var prodPerc = b.qty > 0 ? Math.min(100, Math.round((b.completedQty / b.qty) * 100)) : 0;
+
+   h+='<div class="card" style="border-left:4px solid #16a34a">';
+   h+='<div style="display:flex;justify-content:space-between;align-items:flex-start"><div><b style="font-size:14px;color:#0f172a">🏫 '+b.school+'</b> <span class="badge" style="background:#fef3c7;color:#b45309">'+b.qty+' Pieces</span><div class="small" style="margin-top:3px"><b>'+b.type+'</b> · 📞 '+(b.contact||'N/A')+'</div><div class="small" style="color:#64748b">Due: <b style="color:#b45309">'+b.deadline+'</b></div></div><button onclick="deleteBulkOrder('+b.id+')" style="color:#ef4444;border:none;background:none;font-size:12px;cursor:pointer">✕</button></div>';
+
+   h+='<div style="margin-top:8px"><div style="display:flex;justify-content:space-between" class="small"><span style="font-weight:600">Production: '+b.completedQty+' of '+b.qty+' sewn</span><span style="font-weight:600;color:#2563eb">'+pro.display='flex';
 }
 function saveNewCustomer(){
  var name=document.getElementById('n_name').value; if(name===""){alert("Enter name");return;}
